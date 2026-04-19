@@ -12,16 +12,33 @@
 </head>
 <body>
     <h1>Поиск фильмов</h1>
-    <input type="text" id="search" placeholder="Введите точное название фильма" onkeypress="if(event.key === 'Enter') searchMovie()" />
+    <input type="text" id="search" placeholder="Введите точное название" onkeypress="if(event.key === 'Enter') searchMovie()" />
     <button onclick="searchMovie()">Найти</button>
 
     <script>
-    function searchMovie() {
+    async function searchMovie() {
         let query = document.getElementById("search").value.trim();
-        if (!query) return;
+        if (!query) return alert("Напиши название");
 
         let url = "https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(query);
-        window.open(url, "_blank");
+        
+        try {
+            let res = await fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(url));
+            let data = await res.json();
+            let html = data.contents;
+
+            let exactMatch = html.match(new RegExp('href="(/film/\\d+/)"[^>]*>' + query + '</a>', 'i'));
+            
+            if (exactMatch) {
+                let filmUrl = "https://www.kinopoisk.ru" + exactMatch[1];
+                let finalUrl = filmUrl.replace(".ru", ".net");
+                window.open(finalUrl, "_blank");
+            } else {
+                alert("Точное совпадение не найдено");
+            }
+        } catch(e) {
+            alert("Ошибка");
+        }
     }
     </script>
 </body>
