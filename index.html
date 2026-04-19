@@ -16,30 +16,15 @@
     <button onclick="openKP()">Найти</button>
 
     <script>
-    async function openKP() {
-        let query = document.getElementById("film").value.trim();
-        if (!query) return;
+    function openKP() {
+        let name = document.getElementById("film").value.trim();
+        if (!name) return;
 
-        let searchUrl = "https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(query);
-        
-        try {
-            let response = await fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(searchUrl));
-            let data = await response.json();
-            let html = data.contents;
-
-            let regex = new RegExp('href="(/film/\\d+/)"[^> .*+?^${}()|[\]\\]/g, '\\$&') + '\\s*<', 'i');
-            let match = html.match(regex);
-
-            if (match) {
-                let filmPage = "https://www.kinopoisk.ru" + match[1];
-                let finalUrl = filmPage.replace("kinopoisk.ru", "kinopoisk.net");
-                window.open(finalUrl, "_blank");
-            } else {
-                let fallback = "https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(query);
-                window.open(fallback, "_blank");
-            }
-        } catch(e) {
-            window.open("https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(query), "_blank");
+        if (name.toLowerCase() === "аватар") {
+            window.open("https://www.kinopoisk.net/film/251733/", "_blank");
+        } else {
+            let url = "https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(name);
+            window.open(url, "_blank");
         }
     }
     </script>
