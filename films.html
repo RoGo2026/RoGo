@@ -12,28 +12,7 @@
             text-align:center; 
             padding:30px 15px; 
             margin:0; 
-            background: 
-                linear-gradient(to right, 
-                    #111 0%, 
-                    #1a1a1a 8%, 
-                    #111 10%, 
-                    #111 90%, 
-                    #1a1a1a 92%, 
-                    #111 100%);
-            position: relative;
         }
-        body::before, body::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: rgba(255,255,255,0.08);
-            z-index: -1;
-        }
-        body::before { left: 12%; }
-        body::after { right: 12%; }
-
         .container {
             max-width: 560px;
             margin: 0 auto;
@@ -65,12 +44,12 @@
         .paste-btn { background:#0066cc; }
         .instruction { 
             margin-top:45px; 
-            padding:20px; 
+            padding:25px; 
             background:#1a1a1a; 
             border-radius:12px; 
             text-align:left; 
-            line-height:1.65; 
-            font-size:15px;
+            line-height:1.7; 
+            font-size:17px;        /* увеличил шрифт */
         }
         .dns-link { 
             color:#00dd88; 
