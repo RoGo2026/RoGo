@@ -4,33 +4,33 @@
     <meta charset="UTF-8">
     <title>Поиск фильмов</title>
     <style>
-        body { background:#111; color:white; font-family:Arial; text-align:center; padding-top:50px; }
-        input { width:500px; padding:15px; font-size:18px; border-radius:8px; border:none; margin:10px; }
-        button { padding:15px 30px; font-size:18px; background:#e50914; color:white; border:none; border-radius:8px; cursor:pointer; margin:10px; }
-        h2 { margin-top:40px; }
+        body { background:#111; color:white; font-family:Arial; text-align:center; padding-top:60px; }
+        input { width:520px; padding:16px; font-size:19px; border-radius:10px; border:none; margin:12px 0; }
+        button { padding:16px 35px; font-size:19px; background:#e50914; color:white; border:none; border-radius:10px; cursor:pointer; margin-left:10px; }
+        h2 { margin:40px 0 15px 0; }
     </style>
 </head>
 <body>
     <h1>Поиск фильмов</h1>
     
-    <input type="text" id="search" placeholder="Название фильма (открывает поиск)" onkeydown="if(event.key === 'Enter') searchKP()" />
-    <button onclick="searchKP()">Открыть поиск</button>
+    <input type="text" id="search" placeholder="Название фильма — открывает поиск на Кинопоиске" onkeydown="if(event.key === 'Enter') openSearch()" />
+    <button onclick="openSearch()">Открыть поиск</button>
 
-    <h2>Или вставь ссылку с Кинопоиска</h2>
-    <input type="text" id="url" placeholder="Вставь сюда ссылку с kinopoisk.ru" onkeydown="if(event.key === 'Enter') replaceDomain()" />
-    <button onclick="replaceDomain()">Заменить на .net и открыть</button>
+    <h2>Вставь сюда ссылку с Кинопоиска</h2>
+    <input type="text" id="link" placeholder="https://www.kinopoisk.ru/film/XXXXXX/" onkeydown="if(event.key === 'Enter') changeDomain()" />
+    <button onclick="changeDomain()">Открыть с плеером</button>
 
     <script>
-    function searchKP() {
+    function openSearch() {
         let name = document.getElementById("search").value.trim();
         if (name) {
-            let link = "https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(name);
-            window.open(link, "_blank");
+            let url = "https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(name);
+            window.open(url, "_blank");
         }
     }
 
-    function replaceDomain() {
-        let url = document.getElementById("url").value.trim();
+    function changeDomain() {
+        let url = document.getElementById("link").value.trim();
         if (url) {
             let newUrl = url.replace("kinopoisk.ru", "kinopoisk.net");
             window.open(newUrl, "_blank");
