@@ -81,8 +81,10 @@
     }
 
     function openOperaDNS() {
-        window.location.href = "opera://settings/dns";
-    }
+    const link = document.createElement("a");
+    link.href = "opera://settings/dns";
+    link.click();
+}
     </script>
 </body>
 </html>
