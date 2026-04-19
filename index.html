@@ -1,56 +1,17 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Поиск фильмов</title>
-    <style>
-        body { background:#111; color:white; font-family:Arial; text-align:center; padding-top:60px; }
-        input { width:520px; padding:16px; font-size:19px; border-radius:10px; border:none; margin:12px 0; }
-        button { padding:16px 35px; font-size:19px; background:#e50914; color:white; border:none; border-radius:10px; cursor:pointer; margin:10px; }
-        .big-btn { padding:18px 50px; font-size:22px; margin-top:40px; }
-        h2 { margin:40px 0 15px 0; }
-    </style>
-</head>
 <body>
     <h1>Поиск фильмов</h1>
     
-    <input type="text" id="search" placeholder="Название фильма" onkeydown="if(event.key === 'Enter') openSearch()" />
+    <input type="text" id="search" placeholder="Название фильма"
+           onkeydown="if(event.key === 'Enter') openSearch()" />
     <button onclick="openSearch()">Открыть поиск</button>
 
     <h2>Или вставь ссылку с Кинопоиска</h2>
     <input type="text" id="link" placeholder="https://www.kinopoisk.ru/film/XXXXXX/" />
     <button onclick="changeDomain()">Открыть с плеером</button>
 
-    <button onclick="pasteAndOpen()" class="big-btn">Вставить из буфера обмена и открыть</button>
-
-    <script>
-    function openSearch() {
-        let name = document.getElementById("search").value.trim();
-        if (name) {
-            let url = "https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(name);
-            window.open(url, "_blank");
-        }
-    }
-
-    function changeDomain() {
-        let url = document.getElementById("link").value.trim();
-        if (url) {
-            let newUrl = url.replace("kinopoisk.ru", "kinopoisk.net");
-            window.open(newUrl, "_blank");
-        }
-    }
-
-    async function pasteAndOpen() {
-        try {
-            let text = await navigator.clipboard.readText();
-            if (text) {
-                let newUrl = text.replace("kinopoisk.ru", "kinopoisk.net");
-                window.open(newUrl, "_blank");
-            }
-        } catch(e) {
-            alert("Не удалось прочитать буфер обмена");
-        }
-    }
-    </script>
+    <!-- КНОПКА ПЕРЕМЕЩЕНА СЮДА -->
+    <br>
+    <button onclick="pasteAndOpen()" class="big-btn">
+        Вставить из буфера обмена и открыть
+    </button>
 </body>
-</html>
