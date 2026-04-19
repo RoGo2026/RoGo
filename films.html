@@ -5,51 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Поиск фильмов</title>
     <style>
-        body { background:#111; color:white; font-family:Arial; text-align:center; padding:30px 15px; margin:0; }
-        input { width:100%; max-width:580px; padding:18px; font-size:19px; border-radius:12px; border:none; margin:12px 0; }
-        button { width:100%; max-width:580px; padding:18px; font-size:20px; background:#e50914; color:white; border:none; border-radius:12px; margin:10px 0; font-weight:bold; }
+        body { 
+            background:#111; 
+            color:white; 
+            font-family:Arial; 
+            text-align:center; 
+            padding:30px 15px; 
+            margin:0; 
+            background: linear-gradient(to right, #0a0a0a 0%, #111 15%, #111 85%, #0a0a0a 100%);
+        }
+        .container {
+            max-width: 580px;
+            margin: 0 auto;
+        }
+        input { 
+            width:100%; 
+            padding:14px 18px; 
+            font-size:18px; 
+            border-radius:10px; 
+            border:none; 
+            margin:8px 0; 
+            background:#222;
+        }
+        button { 
+            width:100%; 
+            padding:14px; 
+            font-size:18px; 
+            background:#e50914; 
+            color:white; 
+            border:none; 
+            border-radius:10px; 
+            margin:8px 0; 
+            font-weight:bold;
+        }
         .paste-btn { background:#0066cc; }
         .instruction { 
-            margin-top:60px; 
-            padding:25px; 
+            margin-top:50px; 
+            padding:20px; 
             background:#1a1a1a; 
             border-radius:12px; 
-            max-width:620px; 
-            margin-left:auto; 
-            margin-right:auto; 
             text-align:left; 
             line-height:1.7; 
-            font-size:16px;
+            font-size:15px;
         }
-        .dns-link { color:#00dd88; text-decoration:underline; cursor:pointer; }
+        .dns-link { 
+            color:#00dd88; 
+            text-decoration:underline; 
+            cursor:pointer; 
+        }
     </style>
 </head>
 <body>
-    <h1>Поиск фильмов</h1>
-    
-    <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
-        <strong style="font-size:26px; color:#e50914;">1.</strong>
-        <input type="text" id="search" placeholder="Название фильма" onkeydown="if(event.key === 'Enter') openSearch()" style="flex:1; margin:0;" />
-    </div>
-    <button onclick="openSearch()">Поиск</button>
+    <div class="container">
+        <h1>Поиск фильмов</h1>
+        
+        <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
+            <strong style="font-size:26px; color:#e50914;">1.</strong>
+            <input type="text" id="search" placeholder="Название фильма" onkeydown="if(event.key === 'Enter') openSearch()" />
+        </div>
+        <button onclick="openSearch()">Поиск</button>
 
-    <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-top:35px;">
-        <strong style="font-size:26px; color:#e50914;">2.</strong>
-        <input type="text" id="link" placeholder="https://www.kinopoisk.ru/film/XXXXXX/" style="flex:1; margin:0;" />
-    </div>
-    <h2>Вставь ссылку из Кинопоиска</h2>
+        <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-top:30px;">
+            <strong style="font-size:26px; color:#e50914;">2.</strong>
+            <input type="text" id="link" placeholder="https://www.kinopoisk.ru/film/XXXXXX/" />
+        </div>
+        <h2>Вставь ссылку из Кинопоиска</h2>
 
-    <button onclick="changeDomain()">Открыть с плеером</button>
-    <button onclick="pasteAndOpen()" class="paste-btn">📋 Вставить из буфера и открыть</button>
+        <button onclick="changeDomain()">Открыть с плеером</button>
+        <button onclick="pasteAndOpen()" class="paste-btn">📋 Вставить из буфера и открыть</button>
 
-    <div class="instruction">
-        <strong>Как пользоваться сайтом:</strong><br><br>
-        1. Введи название фильма, сериала, тв передачи в первое поле и нажми «Поиск».<br>
-        2. Найди нужный фильм и перейди на него, сверху скопируй ссылку.<br>
-        3. Нажми кнопку «Вставить из буфера и открыть».<br>
-        4. Вставь ссылку во второе поле и нажми «Открыть с плеером».<br>
-        5. Чтобы отключить рекламу на сайте, зайди в настройки браузера, в поиске набери <strong>DNS</strong> , вставь туда эту ссылку:<br>
-           <span class="dns-link" onclick="copyToClipboard('https://dns.adguard-dns.com/dns-query')">https://dns.adguard-dns.com/dns-query</span>
+        <div class="instruction">
+            <strong>Как пользоваться сайтом:</strong><br><br>
+            1. Введи название фильма, сериала, тв передачи в первое поле и нажми «Поиск».<br>
+            2. Найди нужный фильм и перейди на него, сверху скопируй ссылку.<br>
+            3. Нажми кнопку «Вставить из буфера и открыть».<br>
+            4. Вставь ссылку во второе поле и нажми «Открыть с плеером».<br>
+            5. Чтобы отключить рекламу на сайте, зайди в настройки браузера, в поиске набери <strong>DNS</strong>, вставь туда эту ссылку:<br>
+               <span class="dns-link" onclick="copyToClipboard('https://dns.adguard-dns.com/dns-query')">https://dns.adguard-dns.com/dns-query</span>
+        </div>
     </div>
 
     <script>
@@ -82,9 +115,7 @@
     }
 
     function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert("Ссылка скопирована в буфер обмена!");
-        });
+        navigator.clipboard.writeText(text);
     }
     </script>
 </body>
