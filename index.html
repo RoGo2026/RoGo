@@ -8,68 +8,24 @@
         body { background:#111; color:white; font-family:Arial; text-align:center; padding:30px 15px; margin:0; }
         input { width:100%; max-width:580px; padding:18px; font-size:19px; border-radius:12px; border:none; margin:12px 0; }
         button { width:100%; max-width:580px; padding:18px; font-size:20px; background:#e50914; color:white; border:none; border-radius:12px; margin:10px 0; font-weight:bold; }
-        .paste-btn { background:#0066cc; }
-        .instruction { 
-            margin-top:60px; 
-            padding:25px; 
-            background:#1a1a1a; 
-            border-radius:12px; 
-            max-width:620px; 
-            margin-left:auto; 
-            margin-right:auto; 
-            text-align:left; 
-            line-height:1.7; 
-            font-size:16px;
-        }
     </style>
 </head>
 <body>
     <h1>Поиск фильмов</h1>
     
-    <input type="text" id="search" placeholder="Название фильма" onkeydown="if(event.key === 'Enter') openSearch()" />
-    <button onclick="openSearch()">Поиск фильма</button>
-
-    <h2>Или вставь ссылку с Кинопоиска</h2>
-    <input type="text" id="link" placeholder="https://www.kinopoisk.ru/film/XXXXXX/" />
-
-    <button onclick="changeDomain()">Открыть с плеером</button>
-    <button onclick="pasteAndOpen()" class="paste-btn">📋 Вставить из буфера и открыть</button>
-
-    <div class="instruction">
-        <strong>Как пользоваться сайтом:</strong><br><br>
-        1. Введи название фильма в первое поле и нажми «Поиск фильма».<br>
-        2. Найди нужный фильм и сверху скопируй ссылку на него (нажми на фильм и скопируй адрес из строки браузера).<br>
-        3. Вставь ссылку во второе поле и нажми кнопку «Открыть с плеером».<br>
-        4. Нажми кнопку «Вставить из буфера и открыть» откроется автоматически.<br>
-    </div>
+    <input type="text" id="search" placeholder="Название фильма" onkeydown="if(event.key === 'Enter') searchMovie()" />
+    <button onclick="searchMovie()">Найти на Кинопоиске</button>
 
     <script>
-    function openSearch() {
+    function searchMovie() {
         let name = document.getElementById("search").value.trim();
-        if (name) {
-            window.open("https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(name), "_blank");
-        }
-    }
+        if (!name) return;
 
-    function changeDomain() {
-        let url = document.getElementById("link").value.trim();
-        if (url) {
-            let newUrl = url.replace("kinopoisk.ru", "kinopoisk.net");
-            window.open(newUrl, "_blank");
-        }
-    }
-
-    async function pasteAndOpen() {
-        try {
-            const text = await navigator.clipboard.readText();
-            if (text) {
-                document.getElementById("link").value = text;
-                let newUrl = text.replace("kinopoisk.ru", "kinopoisk.net");
-                window.open(newUrl, "_blank");
-            }
-        } catch (e) {
-            alert("Не удалось прочитать буфер обмена.\n\nЗажмите поле и выберите «Вставить»");
-        }
+        // Поиск с точным совпадением названия
+        let query = 'site:kinopoisk.ru "' + name + '"';
+        let url = "https://www.google.com/search?q=" + encodeURIComponent(query);
+        
+        window.open(url, "_blank");
     }
     </script>
 </body>
