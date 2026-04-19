@@ -2,46 +2,59 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Поиск фильмов</title>
     <style>
-        body { background:#111; color:white; font-family:Arial; text-align:center; padding-top:60px; }
-        input { width:520px; padding:16px; font-size:19px; border-radius:10px; border:none; margin:12px 0; }
-        button { padding:16px 35px; font-size:19px; background:#e50914; color:white; border:none; border-radius:10px; cursor:pointer; margin:10px; }
-        .big-btn { padding:18px 50px; font-size:22px; margin-top:40px; }
-        .instruction { 
-            margin-top:70px; padding:25px; background:#1a1a1a; border-radius:12px; 
-            max-width:650px; margin-left:auto; margin-right:auto; text-align:left; line-height:1.7;
+        body { background:#111; color:white; font-family:Arial; text-align:center; padding:25px 15px; margin:0; }
+        h1 { margin:0 0 25px 0; }
+        input { 
+            width:100%; 
+            max-width:580px; 
+            padding:18px; 
+            font-size:19px; 
+            border-radius:12px; 
+            border:none; 
+            margin:12px 0;
         }
+        button { 
+            width:100%; 
+            max-width:580px; 
+            padding:18px; 
+            font-size:20px; 
+            background:#e50914; 
+            color:white; 
+            border:none; 
+            border-radius:12px; 
+            margin:8px 0; 
+            font-weight:bold;
+        }
+        .paste-btn { background:#0066cc; }
+        .instruction { margin-top:50px; font-size:16px; opacity:0.85; line-height:1.6; }
     </style>
 </head>
 <body>
+
     <h1>Поиск фильмов</h1>
     
     <input type="text" id="search" placeholder="Название фильма" onkeydown="if(event.key === 'Enter') openSearch()" />
-    <button onclick="openSearch()">Поиск фильма</button>
+    <button onclick="openSearch()">Открыть поиск</button>
 
-    <h2>Или вставь ссылку из Кинопоиска</h2>
-    <input type="text" id="link" placeholder="https://www.kinopoisk.ru/film/XXXXXX/" />
+    <h2>Или вставь ссылку с Кинопоиска</h2>
+    <input type="text" id="link" placeholder="https://www.kinopoisk.ru/film/..." />
+
     <button onclick="changeDomain()">Открыть с плеером</button>
-
-    <button onclick="pasteAndOpen()" class="big-btn">Вставить из буфера обмена и открыть</button>
+    <button onclick="pasteFromClipboard()" class="paste-btn">📋 Вставить из буфера и открыть</button>
 
     <div class="instruction">
-        <strong>Как пользоваться сайтом:</strong><br><br>
-        1. Введи название фильма и нажми «Поиск фильма» — откроется Кинопоиск.<br>
-        2. Найди нужный фильм и сверху скопируй ссылку на него.<br>
-        3. Вставь эту ссылку во второе поле и нажми кнопку «Открыть с плеером».<br>
-        4. Нажми на кнопку «Вставить из буфера обмена и открыть».Сайт автоматически откроет фильм с плеером.<br>
-       
+        На ТВ-приставке и некоторых телефонах кнопка буфера может не работать.<br>
+        В этом случае просто вставьте ссылку вручную в поле выше.
     </div>
-    
 
     <script>
     function openSearch() {
         let name = document.getElementById("search").value.trim();
         if (name) {
-            let url = "https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(name);
-            window.open(url, "_blank");
+            window.open("https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(name), "_blank");
         }
     }
 
@@ -53,15 +66,18 @@
         }
     }
 
-    async function pasteAndOpen() {
+    async function pasteFromClipboard() {
         try {
-            let text = await navigator.clipboard.readText();
-            if (text) {
+            const text = await navigator.clipboard.readText();
+            if (text.includes("kinopoisk")) {
                 let newUrl = text.replace("kinopoisk.ru", "kinopoisk.net");
                 window.open(newUrl, "_blank");
+            } else if (text) {
+                document.getElementById("link").value = text;
+                alert("Ссылка вставлена. Нажмите «Открыть с плеером»");
             }
-        } catch(e) {
-            alert("Не удалось прочитать буфер обмена");
+        } catch (e) {
+            alert("Не удалось прочитать буфер обмена.\n\nВставьте ссылку вручную в поле выше.");
         }
     }
     </script>
