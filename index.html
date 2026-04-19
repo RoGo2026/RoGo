@@ -61,7 +61,7 @@
     function changeDomain() {
         let url = document.getElementById("link").value.trim();
         if (url) {
-            let newUrl = url.replace("kinopoisk.ru", "kinopoisk.net");
+            let newUrl = url.replace("kinopoisk.ru", "kinopoisk.wtf");
             window.open(newUrl, "_blank");
         }
     }
@@ -71,7 +71,7 @@
             const text = await navigator.clipboard.readText();
             if (text) {
                 document.getElementById("link").value = text;
-                let newUrl = text.replace("kinopoisk.ru", "kinopoisk.net");
+                let newUrl = text.replace("kinopoisk.ru", "kinopoisk.wtf");
                 window.open(newUrl, "_blank");
             }
         } catch (e) {
