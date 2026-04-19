@@ -21,8 +21,7 @@
             line-height:1.7; 
             font-size:16px;
         }
-        .copy-link { color:#00dd88; cursor:pointer; text-decoration:underline; }
-        .copy-link:hover { color:#00ff99; }
+        .dns-link { color:#00dd88; text-decoration:underline; cursor:pointer; }
     </style>
 </head>
 <body>
@@ -49,10 +48,8 @@
         2. Найди нужный фильм и перейди на него, сверху скопируй ссылку.<br>
         3. Нажми кнопку «Вставить из буфера и открыть».<br>
         4. Вставь ссылку во второе поле и нажми «Открыть с плеером».<br>
-        5. Настрой DNS AdGuard в браузере (нажми на ссылку — скопируется в буфер):<br>
-           • <span class="copy-link" onclick="copyToClipboard('opera://settings/system')">Opera — opera://settings/system</span> (включи «Use DNS-over-HTTPS»)<br>
-           • <span class="copy-link" onclick="copyToClipboard('chrome://settings/security')">Google Chrome — chrome://settings/security</span><br>
-           • <span class="copy-link" onclick="copyToClipboard('browser://settings/security')">Яндекс Браузер — browser://settings/security</span> (вкладка Безопасность)
+        5. Чтобы отключить рекламу на сайте, зайди в настройки браузера, в поиске набери <strong>DNS</strong> или <strong>Прокси</strong>, найди поле <strong>DNS over HTTPS</strong> и вставь туда эту ссылку:<br>
+           <span class="dns-link" onclick="copyToClipboard('https://dns.adguard-dns.com/dns-query')">https://dns.adguard-dns.com/dns-query</span>
     </div>
 
     <script>
@@ -86,7 +83,7 @@
 
     function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(() => {
-            alert("Ссылка скопирована! Вставь её в адресную строку браузера.");
+            alert("Ссылка скопирована в буфер обмена!");
         });
     }
     </script>
