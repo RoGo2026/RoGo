@@ -16,12 +16,27 @@
     <button onclick="openMovie()">Найти фильм</button>
 
     <script>
-    function openMovie() {
+    async function openMovie() {
         let name = document.getElementById("film").value.trim();
         if (!name) return;
 
-        let url = "https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(name);
-        window.open(url, "_blank");
+        let searchUrl = "https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(name);
+        
+        try {
+            let res = await fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(searchUrl));
+            let data = await res.json();
+            let html = data.contents;
+
+            let match = html.match(/href="\/film\/(\d+)\/"/);
+            if (match) {
+                let filmUrl = `https://www.kinopoisk.net/film/${match[1]}/`;
+                window.open(filmUrl, "_blank");
+            } else {
+                window.open(searchUrl, "_blank");
+            }
+        } catch(e) {
+            window.open(searchUrl, "_blank");
+        }
     }
     </script>
 </body>
