@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <title>Поиск фильмов</title>
     <style>
-        body { font-family: Arial; text-align: center; margin-top: 100px; background: #111; color: white; }
-        input { width: 450px; padding: 15px; font-size: 20px; border-radius: 8px; border: none; }
-        button { padding: 15px 30px; font-size: 20px; margin-left: 10px; border-radius: 8px; background: #e50914; color: white; border: none; cursor: pointer; }
-        button:hover { background: #f40612; }
+        body { background:#111; color:white; font-family:Arial; text-align:center; padding-top:100px; }
+        input { width:500px; padding:18px; font-size:22px; border-radius:10px; border:none; }
+        button { padding:18px 35px; font-size:22px; background:#e50914; color:white; border:none; border-radius:10px; cursor:pointer; }
     </style>
 </head>
 <body>
     <h1>Поиск фильмов</h1>
-    <input type="text" id="search" placeholder="Введите название фильма" onkeypress="if(event.key === 'Enter') searchMovie()" />
-    <button onclick="searchMovie()">Найти</button>
+    
+    <input type="text" id="film" placeholder="Название фильма" />
+    <button onclick="openKP()">Найти</button>
 
     <script>
-    function searchMovie() {
-        let query = document.getElementById("search").value.trim();
-        let url = "https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(query);
-        window.open(url, "_blank");
+    function openKP() {
+        let name = document.getElementById("film").value;
+        if (name) {
+            let link = "https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(name);
+            window.open(link, "_blank");
+        }
     }
     </script>
 </body>
