@@ -9,37 +9,45 @@
         input { width:100%; max-width:580px; padding:18px; font-size:19px; border-radius:12px; border:none; margin:12px 0; }
         button { width:100%; max-width:580px; padding:18px; font-size:20px; background:#e50914; color:white; border:none; border-radius:12px; margin:10px 0; font-weight:bold; }
         .paste-btn { background:#0066cc; }
-        .warning { color:#ffcc00; font-size:15px; margin:15px 0; }
+        .instruction { 
+            margin-top:60px; 
+            padding:25px; 
+            background:#1a1a1a; 
+            border-radius:12px; 
+            max-width:620px; 
+            margin-left:auto; 
+            margin-right:auto; 
+            text-align:left; 
+            line-height:1.7; 
+            font-size:16px;
+        }
     </style>
 </head>
 <body>
     <h1>Поиск фильмов</h1>
+    
+    <input type="text" id="search" placeholder="Название фильма" onkeydown="if(event.key === 'Enter') openSearch()" />
+    <button onclick="openSearch()">Поиск фильма</button>
 
-    <input type="text" id="link" placeholder="https://www.kinopoisk.ru/film/..." />
+    <h2>Или вставь ссылку с Кинопоиска</h2>
+    <input type="text" id="link" placeholder="https://www.kinopoisk.ru/film/XXXXXX/" />
 
     <button onclick="changeDomain()">Открыть с плеером</button>
     <button onclick="pasteAndOpen()" class="paste-btn">📋 Вставить из буфера и открыть</button>
 
-    <div class="warning">
-        ⚠️ Кнопка "Вставить из буфера" работает только если сайт открыт по <strong>HTTPS</strong><br>
-       [](https://RoGo2026.github.io/...)<br><br>
-        Если не работает — зажмите поле выше и выберите «Вставить»
+    <div class="instruction">
+        <strong>Как пользоваться сайтом:</strong><br><br>
+        1. Введи название фильма в первое поле и нажми «Поиск фильма».<br>
+        2. Найди нужный фильм и сверху скопируй ссылку на него (нажми на фильм и скопируй адрес из строки браузера).<br>
+        3. Вставь ссылку во второе поле (или нажми кнопку «Вставить из буфера» откроется автоматически).<br>
+        4. Нажми кнопку «Открыть с плеером» — фильм откроется с рабочим плеером.
     </div>
 
     <script>
-    async function pasteAndOpen() {
-        try {
-            const text = await navigator.clipboard.readText();
-            
-            if (text && text.length > 10) {
-                document.getElementById("link").value = text;
-                const newUrl = text.replace("kinopoisk.ru", "kinopoisk.net");
-                window.open(newUrl, "_blank");
-            } else {
-                alert("Буфер обмена пуст");
-            }
-        } catch (err) {
-            alert("Не удалось прочитать буфер обмена.\n\nЗажмите поле и выберите «Вставить» вручную.");
+    function openSearch() {
+        let name = document.getElementById("search").value.trim();
+        if (name) {
+            window.open("https://www.kinopoisk.ru/index.php?kp_query=" + encodeURIComponent(name), "_blank");
         }
     }
 
@@ -48,6 +56,19 @@
         if (url) {
             let newUrl = url.replace("kinopoisk.ru", "kinopoisk.net");
             window.open(newUrl, "_blank");
+        }
+    }
+
+    async function pasteAndOpen() {
+        try {
+            const text = await navigator.clipboard.readText();
+            if (text) {
+                document.getElementById("link").value = text;
+                let newUrl = text.replace("kinopoisk.ru", "kinopoisk.net");
+                window.open(newUrl, "_blank");
+            }
+        } catch (e) {
+            alert("Не удалось прочитать буфер обмена.\n\nЗажмите поле и выберите «Вставить»");
         }
     }
     </script>
