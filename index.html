@@ -12,7 +12,7 @@
 </head>
 <body>
     <h1>Поиск фильмов</h1>
-    <input type="text" id="search" placeholder="Введите точное название" onkeypress="if(event.key === 'Enter') searchMovie()" />
+    <input type="text" id="search" placeholder="Введите название фильма" onkeypress="if(event.key === 'Enter') searchMovie()" />
     <button onclick="searchMovie()">Найти</button>
 
     <script>
@@ -27,17 +27,19 @@
             let data = await res.json();
             let html = data.contents;
 
-            let exactMatch = html.match(new RegExp('href="(/film/\\d+/)"[^>]*>' + query + '</a>', 'i'));
-            
-            if (exactMatch) {
-                let filmUrl = "https://www.kinopoisk.ru" + exactMatch[1];
-                let finalUrl = filmUrl.replace(".ru", ".net");
+            // Ищем точное совпадение названия
+            let regex = new RegExp('href="(/film/\\d+/)"[^> -/\\^$*+?.()|[\]{}]/g, '\\$&') + '<', 'i');
+            let match = html.match(regex);
+
+            if (match) {
+                let filmUrl = "https://www.kinopoisk.ru" + match[1];
+                let finalUrl = filmUrl.replace("kinopoisk.ru", "kinopoisk.net");
                 window.open(finalUrl, "_blank");
             } else {
-                alert("Точное совпадение не найдено");
+                alert("Точное название не найдено");
             }
         } catch(e) {
-            alert("Ошибка");
+            alert("Ошибка подключения");
         }
     }
     </script>
