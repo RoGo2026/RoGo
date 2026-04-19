@@ -12,7 +12,7 @@
 <body>
     <h1>Поиск фильмов</h1>
     
-    <input type="text" id="film" placeholder="Название фильма" />
+    <input type="text" id="film" placeholder="Название фильма" onkeypress="if(event.key === 'Enter') openKP()" />
     <button onclick="openKP()">Найти</button>
 
     <script>
