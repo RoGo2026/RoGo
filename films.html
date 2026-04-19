@@ -49,11 +49,10 @@
         2. Найди нужный фильм и перейди на него, сверху скопируй ссылку.<br>
         3. Нажми кнопку «Вставить из буфера и открыть».<br>
         4. Вставь ссылку во второе поле и нажми «Открыть с плеером».<br>
-        5. Чтобы настроить DNS AdGuard:<br>
-           • Opera — <span class="copy-link" onclick="copyToClipboard('opera://settings/dns')">opera://settings/dns</span><br>
-           • Google Chrome — <span class="copy-link" onclick="copyToClipboard('chrome://settings/security')">chrome://settings/security</span><br>
-           • Яндекс.Браузер — <span class="copy-link" onclick="copyToClipboard('browser://settings/security')">browser://settings/security</span><br>
-           <small style="color:#888;">(нажми на ссылку — она скопируется в буфер)</small>
+        5. Настрой DNS AdGuard в браузере (нажми на ссылку — скопируется в буфер):<br>
+           • <span class="copy-link" onclick="copyToClipboard('opera://settings/system')">Opera — opera://settings/system</span> (включи «Use DNS-over-HTTPS»)<br>
+           • <span class="copy-link" onclick="copyToClipboard('chrome://settings/security')">Google Chrome — chrome://settings/security</span><br>
+           • <span class="copy-link" onclick="copyToClipboard('browser://settings/security')">Яндекс Браузер — browser://settings/security</span> (вкладка Безопасность)
     </div>
 
     <script>
@@ -87,9 +86,7 @@
 
     function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(() => {
-            alert("Ссылка скопирована в буфер обмена! Теперь вставь её в адресную строку браузера.");
-        }).catch(() => {
-            alert("Не удалось скопировать. Скопируй вручную: " + text);
+            alert("Ссылка скопирована! Вставь её в адресную строку браузера.");
         });
     }
     </script>
