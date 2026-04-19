@@ -6,7 +6,8 @@
     <style>
         body { background:#111; color:white; font-family:Arial; text-align:center; padding-top:60px; }
         input { width:520px; padding:16px; font-size:19px; border-radius:10px; border:none; margin:12px 0; }
-        button { padding:16px 35px; font-size:19px; background:#e50914; color:white; border:none; border-radius:10px; cursor:pointer; margin:8px; }
+        button { padding:16px 35px; font-size:19px; background:#e50914; color:white; border:none; border-radius:10px; cursor:pointer; margin:10px; }
+        .big-btn { padding:18px 50px; font-size:22px; margin-top:30px; }
         h2 { margin:40px 0 15px 0; }
     </style>
 </head>
@@ -16,10 +17,11 @@
     <input type="text" id="search" placeholder="Название фильма" onkeydown="if(event.key === 'Enter') openSearch()" />
     <button onclick="openSearch()">Открыть поиск</button>
 
-    <h2>Вставь ссылку с Кинопоиска</h2>
-    <input type="text" id="link" placeholder="https://www.kinopoisk.ru/film/XXXXXX/" style="width:400px;" />
+    <h2>Или вставь ссылку с Кинопоиска</h2>
+    <input type="text" id="link" placeholder="https://www.kinopoisk.ru/film/XXXXXX/" />
     <button onclick="changeDomain()">Открыть с плеером</button>
-    <button onclick="pasteAndOpen()">Вставить из буфера и открыть</button>
+
+    <button onclick="pasteAndOpen()" class="big-btn">Вставить из буфера обмена и открыть</button>
 
     <script>
     function openSearch() {
@@ -41,14 +43,12 @@
     async function pasteAndOpen() {
         try {
             let text = await navigator.clipboard.readText();
-            if (text.includes("kinopoisk.ru")) {
+            if (text) {
                 let newUrl = text.replace("kinopoisk.ru", "kinopoisk.net");
                 window.open(newUrl, "_blank");
-            } else {
-                alert("В буфере нет ссылки с Кинопоиска");
             }
         } catch(e) {
-            alert("Не удалось прочитать буфер обмена");
+            alert("Не удалось прочитать буфер обмена. Разреши доступ в браузере.");
         }
     }
     </script>
