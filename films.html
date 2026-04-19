@@ -9,6 +9,7 @@
         input { width:100%; max-width:580px; padding:18px; font-size:19px; border-radius:12px; border:none; margin:12px 0; }
         button { width:100%; max-width:580px; padding:18px; font-size:20px; background:#e50914; color:white; border:none; border-radius:12px; margin:10px 0; font-weight:bold; }
         .paste-btn { background:#0066cc; }
+        .dns-btn { background:#00aa66; margin-top:15px; }
         .instruction { 
             margin-top:60px; 
             padding:25px; 
@@ -40,14 +41,14 @@
 
     <button onclick="changeDomain()">Открыть с плеером</button>
     <button onclick="pasteAndOpen()" class="paste-btn">📋 Вставить из буфера и открыть</button>
+    <button onclick="openOperaDNS()" class="dns-btn">⚙️ Настроить DNS в Opera</button>
 
     <div class="instruction">
         <strong>Как пользоваться сайтом:</strong><br><br>
-        1. Введи название фильма , сериала , тв передачи в первое поле и нажми «Поиск».<br>
-        2. Найди нужный фильм и перейди на него , сверху скопируй ссылку (скопируй адрес из строки браузера).<br>
-        3. Нажми кнопку «Вставить из буфера и открыть» откроется автоматически (работает на Windows).<br>
-        4. Вставь ссылку во второе поле и нажми кнопку «Открыть с плеером».<br>
-    
+        1. Введи название фильма, сериала, тв передачи в первое поле и нажми «Поиск».<br>
+        2. Найди нужный фильм и перейди на него, сверху скопируй ссылку.<br>
+        3. Нажми кнопку «Вставить из буфера и открыть».<br>
+        4. Вставь ссылку во второе поле и нажми «Открыть с плеером».<br>
     </div>
 
     <script>
@@ -77,6 +78,10 @@
         } catch (e) {
             alert("Не удалось прочитать буфер обмена.\n\nЗажмите поле и выберите «Вставить»");
         }
+    }
+
+    function openOperaDNS() {
+        window.open("opera://settings/?search=dns", "_blank");
     }
     </script>
 </body>
