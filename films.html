@@ -3,131 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Поиск фильмов на Кинопоиск</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f4f4f9;
-        }
-        .search-container {
-            text-align: center;
-            background: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-            width: 90%;
-            max-width: 500px;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-        p {
-            color: #666;
-            margin-bottom: 1.5rem;
-        }
-        input {
-            width: 70%;
-            padding: 12px 15px;
-            font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        input:focus {
-            border-color: #ff5500;
-        }
-        button {
-            padding: 12px 25px;
-            font-size: 16px;
-            background-color: #ff5500;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-left: 10px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #e04e00;
-        }
-        .note {
-            margin-top: 20px;
-            font-size: 0.85em;
-            color: #888;
-        }
-    </style>
+    <title>Найти фильм на Кинопоиск</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <h1>🎬 Поиск фильма</h1>
+        <p>Введите название фильма и выберите подходящий вариант из списка.</p>
+        
+        <div class="search-box">
+            <input type="text" id="movieInput" placeholder="Например: Интерстеллар">
+            <button id="searchButton">Найти</button>
+        </div>
 
-<div class="search-container">
-    <h1>🎬 Кинопоиск (.wtf)</h1>
-    <p>Введите название фильма и нажмите "Найти"</p>
-    
-    <input type="text" id="movieInput" placeholder="Например: Интерстеллар" value="">
-    <button onclick="openMovieInNewTab()">Найти</button>
-    
-    <div class="note">
-        <p>Вы будете перенаправлены на страницу поиска Кинопоиска,<br> 
-        но с доменом <strong>.net</strong> вместо <strong>.ru</strong>.</p>
-        <p style="font-size:0.8em;">⚠️ Внимание: сайт с доменом .wtf не является официальным. Используйте на свой страх и риск.</p>
+        <div id="loading" class="loading hidden">Поиск...</div>
+        <div id="results" class="results"></div>
+        <div id="error" class="error hidden"></div>
+        
+        <div class="note">
+            ⚠️ Внимание: сайт с доменом .net не является официальным. Используйте на свой страх и риск.
+        </div>
     </div>
-</div>
-
-<script>
-    function openMovieInNewTab() {
-        // 1. Получаем название фильма из поля ввода
-        const movieName = document.getElementById('movieInput').value.trim();
-        
-        if (!movieName) {
-            alert('Пожалуйста, введите название фильма.');
-            return;
-        }
-
-        // 2. Формируем URL для поиска на kinopoisk.ru
-        //    Кодируем название для корректной передачи в URL
-        const searchQuery = encodeURIComponent(movieName);
-        const ruUrl = `https://www.kinopoisk.ru/index.php?kp_query=${searchQuery}`;
-        
-        // 3. Заменяем домен .ru на .net
-        //    Используем объект URL для надёжного разбора и изменения
-        let urlObject;
-        try {
-            urlObject = new URL(ruUrl);
-        } catch (e) {
-            console.error("Ошибка при создании URL:", e);
-            alert('Произошла ошибка при формировании ссылки.');
-            return;
-        }
-        
-        // Меняем хост (домен) на kinopoisk.net
-        urlObject.hostname = 'www.kinopoisk.wtf';
-        
-        // Получаем итоговую строку URL
-        const netUrl = urlObject.toString();
-        
-        // 4. Открываем полученный URL в новой вкладке
-        //    '_blank' гарантирует открытие в новой вкладке
-        window.open(netUrl, '_blank');
-        
-        // (Опционально) Очищаем поле ввода после поиска
-        // document.getElementById('movieInput').value = '';
-    }
-
-    // Позволяет запускать поиск по нажатию клавиши Enter
-    document.getElementById('movieInput').addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            openMovieInNewTab();
-        }
-    });
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
