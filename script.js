@@ -100,18 +100,18 @@ function showError(message) {
     errorDiv.textContent = message;
     errorDiv.classList.remove('hidden');
 }
-// Функция копирования DNS-ссылки
+// Функция копирования DNS-ссылки при клике на саму ссылку
 function copyDnsLink() {
     const linkElement = document.getElementById('dnsLink');
     if (!linkElement) return;
     
     const linkText = linkElement.textContent;
     navigator.clipboard.writeText(linkText).then(() => {
-        const btn = document.getElementById('copyDnsBtn');
-        const originalText = btn.textContent;
-        btn.textContent = '✅ Скопировано!';
+        // Визуальное подтверждение: временно меняем текст ссылки
+        const originalText = linkElement.textContent;
+        linkElement.textContent = '✅ Ссылка скопирована!';
         setTimeout(() => {
-            btn.textContent = originalText;
+            linkElement.textContent = originalText;
         }, 2000);
     }).catch(err => {
         alert('Не удалось скопировать. Выделите ссылку вручную.');
