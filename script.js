@@ -1,3 +1,4 @@
+// Дожидаемся загрузки DOM, чтобы элементы точно существовали
 document.addEventListener('DOMContentLoaded', () => {
     const searchButton = document.getElementById('searchButton');
     const movieInput = document.getElementById('movieInput');
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Функция поиска (доступна глобально)
 async function searchMovies() {
     const query = document.getElementById('movieInput').value.trim();
     if (!query) {
@@ -22,15 +24,16 @@ async function searchMovies() {
         return;
     }
 
-    // 🔑 ЗАМЕНИТЕ НА СВОЙ РАБОЧИЙ КЛЮЧ ОТ @kinopoiskdev_bot
+    // 🔑 ВСТАВЬТЕ СВОЙ НОВЫЙ ТОКЕН (СКОПИРУЙТЕ ИЗ БОТА)
     const API_KEY = '3W9C8C5-2H1M85S-GEXEN27-S5DG27B';
-    const url = `https://api.kinopoisk.dev/v1.4/movie/search?page=1&limit=10&query=${encodeURIComponent(query)}`;
+    
+    // ✅ Правильный домен API (poiskkino.dev)
+    const url = `https://api.poiskkino.dev/v1.4/movie/search?page=1&limit=10&query=${encodeURIComponent(query)}`;
 
     const loading = document.getElementById('loading');
     const resultsDiv = document.getElementById('results');
     const errorDiv = document.getElementById('error');
 
-    // Показываем индикатор загрузки
     loading.classList.remove('hidden');
     resultsDiv.innerHTML = '';
     errorDiv.classList.add('hidden');
@@ -45,7 +48,6 @@ async function searchMovies() {
         }
 
         const data = await response.json();
-
         if (!data.docs || data.docs.length === 0) {
             showError('Ничего не найдено. Попробуйте изменить запрос.');
             return;
@@ -89,7 +91,6 @@ function displayResults(movies) {
 }
 
 function openMovie(kinopoiskId) {
-    // Формируем ссылку на .net с ID фильма
     const netUrl = `https://www.kinopoisk.net/film/${kinopoiskId}/`;
     window.open(netUrl, '_blank');
 }
