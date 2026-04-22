@@ -15,8 +15,7 @@ body {
     align-items: center;
     justify-content: center;
     color: #e0e0e0;
-    /* Исправление: запрещаем горизонтальную прокрутку */
-    overflow-x: hidden; 
+    overflow-x: hidden; /* Запрещаем вылезание за горизонталь */
 }
 
 .container {
@@ -34,7 +33,7 @@ body {
     z-index: 1;
 }
 
-/* === ИСПРАВЛЕНИЕ: ФОНОВЫЕ КАРТИНКИ === */
+/* === СТИЛИ ДЛЯ ФОНОВЫХ КАРТИНОК (ПО БОКАМ) === */
 .bg-wallpaper {
     position: fixed;
     top: 0;
@@ -43,7 +42,7 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: -1;
-    overflow: hidden; /* Обрезает всё, что вылезает */
+    overflow: hidden;
 }
 
 .wallpaper {
@@ -53,11 +52,6 @@ body {
     transition: opacity 0.3s;
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    
-    /* ГЛАВНОЕ ИСПРАВЛЕНИЕ: Ограничиваем размер, чтобы не вылезали на ТВ */
-    max-width: 12vw; 
-    max-height: 20vh;
-    object-fit: contain;
 }
 
 /* Вверху по центру (Interstellar) */
@@ -69,12 +63,12 @@ body {
     opacity: 0.4;
 }
 
-/* Расположение слева */
+/* Расположение слева (ОТОДВИНУЛ ОТ КРАЯ: left: 2% и 3%) */
 .left-1 { top: 8%; left: 2%; width: 160px; transform: rotate(-3deg); }
 .left-2 { top: 38%; left: 3%; width: 140px; transform: rotate(2deg); }
 .left-3 { top: 68%; left: 2%; width: 150px; transform: rotate(-2deg); }
 
-/* Расположение справа */
+/* Расположение справа (ОТОДВИНУЛ ОТ КРАЯ: right: 2% и 3%) */
 .right-1 { top: 8%; right: 2%; width: 160px; transform: rotate(3deg); }
 .right-2 { top: 38%; right: 3%; width: 140px; transform: rotate(-2deg); }
 .right-3 { top: 68%; right: 2%; width: 150px; transform: rotate(2deg); }
@@ -239,10 +233,10 @@ button:active {
     transform: translateY(-2px);
 }
 
-/* Постеры фильмов в результатах поиска (увеличенные) */
+/* === ГЛАВНОЕ ИСПРАВЛЕНИЕ: ПОСТЕРЫ СТАЛИ В 2 РАЗА БОЛЬШЕ === */
 .movie-poster {
-    width: 110px;
-    height: 160px;
+    width: 110px;  /* Было 55px */
+    height: 160px; /* Было 80px */
     object-fit: cover;
     border-radius: 12px;
     background: #2a2a4a;
