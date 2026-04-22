@@ -1,118 +1,370 @@
-// Дожидаемся загрузки DOM, чтобы элементы точно существовали
-document.addEventListener('DOMContentLoaded', () => {
-    const searchButton = document.getElementById('searchButton');
-    const movieInput = document.getElementById('movieInput');
-    
-    if (searchButton) {
-        searchButton.addEventListener('click', searchMovies);
-    }
-    
-    if (movieInput) {
-        movieInput.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                searchMovies();
-            }
-        });
-    }
-});
+/* Иконка хлопушки рядом с заголовком */
+.clapper-icon {
+    width: 42px;
+    height: 42px;
+    vertical-align: middle;
+    margin-right: 12px;
+    margin-bottom: 4px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    animation: clapperFloat 3s ease-in-out infinite;
+}
 
-// Функция поиска (доступна глобально)
-async function searchMovies() {
-    const query = document.getElementById('movieInput').value.trim();
-    
-    if (!query) {
-        showError('Пожалуйста, введите название фильма.');
-        return;
-    }
+@keyframes clapperFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-3px) rotate(-5deg); }
+}
 
-    const API_KEY = '3W9C8C5-2H1M85S-GEXEN27-S5DG27B';
-    const url = `https://api.poiskkino.dev/v1.4/movie/search?page=1&limit=10&query=${encodeURIComponent(query)}`;
-
-    const loading = document.getElementById('loading');
-    const resultsDiv = document.getElementById('results');
-    const errorDiv = document.getElementById('error');
-
-    loading.classList.remove('hidden');
-    resultsDiv.innerHTML = '';
-    errorDiv.classList.add('hidden');
-
-    try {
-        const response = await fetch(url, {
-            headers: { 'X-API-KEY': API_KEY }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Ошибка API: ${response.status}`);
-        }
-
-        const data = await response.json();
-        if (!data.docs || data.docs.length === 0) {
-            showError('Ничего не найдено. Попробуйте изменить запрос.');
-            return;
-        }
-
-        displayResults(data.docs);
-    } catch (error) {
-        console.error('Ошибка при поиске:', error);
-        showError('Не удалось выполнить поиск. Проверьте API-ключ и попробуйте снова.');
-    } finally {
-        loading.classList.add('hidden');
+@media (max-width: 480px) {
+    .clapper-icon {
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
     }
 }
 
-function displayResults(movies) {
-    const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = '';
+/* Общие сбросы и базовые стили */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* === СТИЛИ ДЛЯ ФОНОВЫХ КАРТИНОК === */
+.bg-wallpaper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.wallpaper {
+    position: absolute;
+    opacity: 0.35;
+    filter: grayscale(30%) brightness(0.8);
+    transition: opacity 0.3s;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* Вверху по центру (Interstellar) */
+.top-center { 
+    top: 2%; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 200px; 
+    opacity: 0.4;
+    z-index: 0;
+}
+
+/* Расположение слева */
+.left-1 { top: 8%; left: 1%; width: 160px; transform: rotate(-3deg); }
+.left-2 { top: 38%; left: 2%; width: 140px; transform: rotate(2deg); }
+.left-3 { top: 68%; left: 1%; width: 150px; transform: rotate(-2deg); }
+
+/* Расположение справа */
+.right-1 { top: 8%; right: 1%; width: 160px; transform: rotate(3deg); }
+.right-2 { top: 38%; right: 2%; width: 140px; transform: rotate(-2deg); }
+.right-3 { top: 68%; right: 1%; width: 150px; transform: rotate(2deg); }
+
+/* Внизу */
+.bottom-1 { bottom: 3%; left: 50%; transform: translateX(-50%); width: 180px; opacity: 0.25; }
+
+/* Адаптация для планшетов и телефонов — уменьшаем картинки */
+@media (max-width: 900px) {
+    .top-center { width: 140px; }
+    .left-1 { width: 100px; left: 0%; }
+    .left-2 { width: 90px; left: 1%; }
+    .left-3 { width: 95px; left: 0%; }
     
-    movies.forEach(movie => {
-        const movieElement = document.createElement('div');
-        movieElement.className = 'movie-item';
-        movieElement.onclick = () => openMovie(movie.id);
-
-        const posterUrl = movie.poster?.previewUrl || 'https://via.placeholder.com/50x75?text=?';
-        const year = movie.year ? ` (${movie.year})` : '';
-        const rating = movie.rating?.kp ? `★ ${movie.rating.kp.toFixed(1)}` : '';
-
-        movieElement.innerHTML = `
-            <img class="movie-poster" src="${posterUrl}" alt="${movie.name}" onerror="this.src='https://via.placeholder.com/50x75?text=?'">
-            <div class="movie-info">
-                <div class="movie-title">${movie.name}${year}</div>
-                <div class="movie-details">
-                    ${movie.alternativeName ? `${movie.alternativeName} • ` : ''}
-                    ${movie.movieLength ? `${movie.movieLength} мин` : ''}
-                    ${rating ? ` • ${rating}` : ''}
-                </div>
-            </div>
-        `;
-        
-        resultsDiv.appendChild(movieElement);
-    });
-}
-
-function openMovie(kinopoiskId) {
-    const wtfUrl = `https://www.kinopoisk.wtf/film/${kinopoiskId}/`;
-    window.open(wtfUrl, '_blank');
-}
-
-function showError(message) {
-    const errorDiv = document.getElementById('error');
-    errorDiv.textContent = message;
-    errorDiv.classList.remove('hidden');
-}
-
-function copyDnsLink() {
-    const linkElement = document.getElementById('dnsLink');
-    if (!linkElement) return;
+    .right-1 { width: 100px; right: 0%; }
+    .right-2 { width: 90px; right: 1%; }
+    .right-3 { width: 95px; right: 0%; }
     
-    const linkText = linkElement.textContent;
-    navigator.clipboard.writeText(linkText).then(() => {
-        const originalText = linkElement.textContent;
-        linkElement.textContent = '✅ Ссылка скопирована!';
-        setTimeout(() => {
-            linkElement.textContent = originalText;
-        }, 2000);
-    }).catch(err => {
-        alert('Не удалось скопировать. Выделите ссылку вручную.');
-    });
+    .bottom-1 { width: 120px; }
+}
+
+@media (max-width: 600px) {
+    .top-center { width: 100px; top: 1%; }
+    .left-1 { width: 70px; top: 6%; }
+    .left-2 { width: 65px; top: 28%; }
+    .left-3 { width: 68px; top: 53%; }
+    
+    .right-1 { width: 70px; top: 6%; }
+    .right-2 { width: 65px; top: 28%; }
+    .right-3 { width: 68px; top: 53%; }
+    
+    .bottom-1 { width: 90px; bottom: 2%; }
+}
+
+body {
+    font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+    background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e0e0e0;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(30, 30, 50, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 28px;
+    padding: 24px 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(230, 0, 0, 0.15) inset;
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    font-size: clamp(24px, 8vw, 32px);
+    font-weight: 600;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #ff4d4d, #cc0000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+}
+
+p {
+    color: #b0b0c0;
+    margin-bottom: 24px;
+    font-size: clamp(14px, 4vw, 16px);
+    line-height: 1.5;
+}
+
+.search-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+@media (min-width: 480px) {
+    .search-box {
+        flex-direction: row;
+    }
+}
+
+#movieInput {
+    flex: 1;
+    padding: 16px 18px;
+    font-size: 16px;
+    background: rgba(20, 20, 35, 0.9);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    color: #ffffff;
+    outline: none;
+    transition: all 0.2s ease;
+    -webkit-appearance: none;
+}
+
+#movieInput:focus {
+    border-color: #cc0000;
+    background: rgba(25, 25, 45, 1);
+    box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.2);
+}
+
+#movieInput::placeholder {
+    color: #7a7a9a;
+    opacity: 0.7;
+}
+
+button {
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #e60000, #990000);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 6px 14px rgba(230, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #ff1a1a, #b30000);
+    transform: scale(1.02);
+    box-shadow: 0 8px 18px rgba(230, 0, 0, 0.4);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.loading {
+    text-align: center;
+    padding: 30px 10px;
+    color: #ff8080;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0 10px;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.results::-webkit-scrollbar {
+    width: 5px;
+}
+
+.results::-webkit-scrollbar-thumb {
+    background: #cc0000;
+    border-radius: 10px;
+}
+
+.movie-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: rgba(25, 25, 45, 0.7);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.movie-item:hover {
+    background: rgba(40, 40, 70, 0.8);
+    border-color: rgba(204, 0, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+.movie-poster {
+    width: 55px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #2a2a4a;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+}
+
+.movie-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.movie-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 480px) {
+    .movie-title {
+        white-space: normal;
+        font-size: 16px;
+    }
+}
+
+.movie-details {
+    font-size: 13px;
+    color: #b0b0d0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+}
+
+.error {
+    color: #ff7b7b;
+    text-align: center;
+    padding: 20px;
+    background: rgba(180, 40, 40, 0.15);
+    border-radius: 20px;
+    margin: 20px 0;
+    border-left: 4px solid #cc0000;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.note {
+    margin-top: 30px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 13px;
+    color: #9a9ab0;
+    text-align: center;
+    line-height: 1.5;
+}
+
+@media (max-width: 380px) {
+    body {
+        padding: 10px;
+    }
+    .container {
+        padding: 20px 16px;
+    }
+    button {
+        padding: 16px 18px;
+        font-size: 15px;
+    }
+    #movieInput {
+        padding: 14px 16px;
+    }
+}
+
+/* Кликабельная ссылка */
+code.clickable-link,
+#dnsLink.clickable-link {
+    display: block;
+    padding: 14px 18px;
+    background: rgba(204, 0, 0, 0.15);
+    border: 1.5px dashed rgba(204, 0, 0, 0.5);
+    border-radius: 14px;
+    font-family: 'Courier New', monospace;
+    font-size: 15px;
+    font-weight: 700 !important;
+    color: #ff8888;
+    word-break: break-all;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+    text-decoration: none;
+    text-align: center;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 8px rgba(204, 0, 0, 0.2);
+}
+
+code.clickable-link:hover,
+#dnsLink.clickable-link:hover {
+    background: rgba(204, 0, 0, 0.3);
+    color: #ffcccc;
+    border: 1.5px solid #cc0000;
+    box-shadow: 0 0 12px rgba(204, 0, 0, 0.4);
+    transform: scale(1.01);
 }
