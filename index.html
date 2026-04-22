@@ -7,42 +7,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="cinema-grid">
-        <!-- ЛЕВАЯ ПАНЕЛЬ – CINEVERSE (как на картинке) -->
-        <div class="poster-panel left">
-            <div class="panel-header">
-                <h2>CINEVERSE</h2>
-                <p>Кино, которое вдохновляет</p>
-            </div>
-            <div class="movie-card">
-                <div class="poster-placeholder">★ 8.6</div>
-                <div class="movie-title">Интерстеллар</div>
-                <div class="movie-meta">2014, США</div>
-            </div>
-            <div class="movie-card">
-                <div class="poster-placeholder">★ 8.7</div>
-                <div class="movie-title">Дюна: Часть вторая</div>
-                <div class="movie-meta">2024, США</div>
-            </div>
-            <div class="movie-card">
-                <div class="poster-placeholder">★ 8.0</div>
-                <div class="movie-title">Бегущий по лезвию 2049</div>
-                <div class="movie-meta">2017, США</div>
-            </div>
-            <div class="movie-card">
-                <div class="poster-placeholder">★ 8.4</div>
-                <div class="movie-title">Джокер</div>
-                <div class="movie-meta">2019, США</div>
-            </div>
+    <div class="cinema-layout">
+        <!-- ЛЕВАЯ ПАНЕЛЬ – CINEVERSE (только декоративные постеры) -->
+        <div class="poster-wall left">
+            <div class="poster interstellar"></div>
+            <div class="poster dune"></div>
+            <div class="poster bladerunner"></div>
+            <div class="poster joker"></div>
         </div>
 
-        <!-- ЦЕНТРАЛЬНАЯ ПАНЕЛЬ – MOVIEGO (ВАШ ОРИГИНАЛ) -->
-        <div class="search-panel">
-            <div class="search-header">
-                <h1>MOVIEGO</h1>
-                <p>Хорошее кино на любой вкус</p>
-            </div>
-
+        <!-- ЦЕНТРАЛЬНАЯ ПАНЕЛЬ – MOVIEGO (ВАШ ОРИГИНАЛЬНЫЙ КОД, БЕЗ ИЗМЕНЕНИЙ) -->
+        <div class="container">
+            <h1>🎬 Поиск фильма</h1>
+            <p>Введите название фильма и выберите подходящий вариант из списка.</p>
+            
             <div class="search-box">
                 <input type="text" id="movieInput" placeholder="Например: Интерстеллар">
                 <button id="searchButton">Найти</button>
@@ -51,55 +29,27 @@
             <div id="loading" class="loading hidden">Поиск...</div>
             <div id="results" class="results"></div>
             <div id="error" class="error hidden"></div>
-
-            <!-- Инструкция DNS (как было) -->
-            <div class="dns-note">
-                <p>Чтобы отключить рекламу на сайте:<br>
-                зайди в настройки браузера, в поиске набери <strong>DNS</strong>, выбери <strong>пользовательский профиль</strong> и в пустое поле вставь ссылку:</p>
-                <code id="dnsLink" class="clickable-link" onclick="copyDnsLink()">https://dns.adguard-dns.com/dns-query</code>
-                <p class="click-hint">(нажми на ссылку, она скопируется)</p>
+            
+            <div class="note">
+                <div class="dns-notice">
+                    <p>Чтобы отключить рекламу на сайте:<br>
+                    зайди в настройки браузера, в поиске набери <strong>DNS</strong>, выбери <strong>пользовательский профиль</strong> и в пустое поле вставь ссылку:</p>
+                    <code id="dnsLink" class="clickable-link" onclick="copyDnsLink()">https://dns.adguard-dns.com/dns-query</code>
+                    <p class="click-hint">(нажми на ссылку, она скопируется)</p>
+                </div>
             </div>
         </div>
 
-        <!-- ПРАВАЯ ПАНЕЛЬ – KINOHUB (как на картинке) -->
-        <div class="poster-panel right">
-            <div class="panel-header">
-                <h2>KINOHUB</h2>
-                <p>Погрузись в мир великого кино</p>
-            </div>
-            <div class="movie-card">
-                <div class="poster-placeholder">★ 8.6</div>
-                <div class="movie-title">Оппенгеймер</div>
-                <div class="movie-meta">2023, США</div>
-            </div>
-            <div class="movie-card">
-                <div class="poster-placeholder">★ 7.9</div>
-                <div class="movie-title">Аватар: Путь воды</div>
-                <div class="movie-meta">2022, США</div>
-            </div>
-            <div class="movie-card">
-                <div class="poster-placeholder">★ 6.5</div>
-                <div class="movie-title">Годзилла и Конг: Новая империя</div>
-                <div class="movie-meta">2024, США</div>
-            </div>
-            <div class="movie-card">
-                <div class="poster-placeholder">★ 8.5</div>
-                <div class="movie-title">Дюна: Часть вторая</div>
-                <div class="movie-meta">2024, США</div>
-            </div>
-
-            <!-- Блок "Культовые" как на картинке -->
+        <!-- ПРАВАЯ ПАНЕЛЬ – KINOHUB + Легенды (только декоративные постеры) -->
+        <div class="poster-wall right">
+            <div class="poster oppenheimer"></div>
+            <div class="poster avatar"></div>
+            <div class="poster godzilla"></div>
+            <div class="poster dune2"></div>
+            <!-- Декоративный блок с легендарными фильмами -->
             <div class="legend-block">
-                <h3>THE DARK KNIGHT</h3>
-                <div class="legend-item">
-                    <div class="legend-poster"></div>
-                    <span>Кристофер Нолан</span>
-                </div>
-                <h3 style="margin-top: 16px;">PULP FICTION</h3>
-                <div class="legend-item">
-                    <div class="legend-poster"></div>
-                    <span>Квентин Тарантино</span>
-                </div>
+                <div class="legend-item batman"></div>
+                <div class="legend-item pulp"></div>
             </div>
         </div>
     </div>
