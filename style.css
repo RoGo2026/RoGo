@@ -62,14 +62,14 @@
 }
 
 /* Расположение слева */
-.left-1 { top: 8%; left: 4%; width: 160px; transform: rotate(-3deg); }
-.left-2 { top: 38%; left: 5%; width: 240px; transform: rotate(2deg); }
-.left-3 { top: 68%; left: 4%; width: 150px; transform: rotate(-2deg); }
+.left-1 { top: 8%; left: 7%; width: 250px; transform: rotate(-3deg); }
+.left-2 { top: 38%; left: 5%; width: 250px; transform: rotate(2deg); }
+.left-3 { top: 68%; left: 7%; width: 250px; transform: rotate(-2deg); }
 
 /* Расположение справа */
-.right-1 { top: 8%; right: 4%; width: 160px; transform: rotate(3deg); }
-.right-2 { top: 38%; right: 5%; width: 140px; transform: rotate(-2deg); }
-.right-3 { top: 68%; right: 4%; width: 250px; transform: rotate(2deg); }
+.right-1 { top: 8%; right: 7%; width: 250px; transform: rotate(3deg); }
+.right-2 { top: 38%; right: 5%; width: 250px; transform: rotate(-2deg); }
+.right-3 { top: 68%; right: 7%; width: 250px; transform: rotate(2deg); }
 
 /* Внизу */
 .bottom-1 { bottom: 3%; left: 50%; transform: translateX(-50%); width: 180px; opacity: 0.25; }
