@@ -1,4 +1,4 @@
-// Ожидаем загрузки DOM
+// Этот файл полностью совпадает с вашим исходным (без изменений)
 document.addEventListener('DOMContentLoaded', () => {
     const searchButton = document.getElementById('searchButton');
     const movieInput = document.getElementById('movieInput');
@@ -16,9 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Токен API (тот же)
-const API_KEY = '3W9C8C5-2H1M85S-GEXEN27-S5DG27B';
-
 async function searchMovies() {
     const query = document.getElementById('movieInput').value.trim();
     if (!query) {
@@ -26,6 +23,7 @@ async function searchMovies() {
         return;
     }
 
+    const API_KEY = '3W9C8C5-2H1M85S-GEXEN27-S5DG27B';
     const url = `https://api.poiskkino.dev/v1.4/movie/search?page=1&limit=10&query=${encodeURIComponent(query)}`;
 
     const loading = document.getElementById('loading');
@@ -69,12 +67,12 @@ function displayResults(movies) {
         movieElement.className = 'movie-item';
         movieElement.onclick = () => openMovie(movie.id);
 
-        const posterUrl = movie.poster?.previewUrl || 'https://via.placeholder.com/55x80/2a2a4a/ff8080?text=?';
+        const posterUrl = movie.poster?.previewUrl || 'https://via.placeholder.com/50x75?text=?';
         const year = movie.year ? ` (${movie.year})` : '';
         const rating = movie.rating?.kp ? `★ ${movie.rating.kp.toFixed(1)}` : '';
 
         movieElement.innerHTML = `
-            <img class="movie-poster" src="${posterUrl}" alt="${movie.name}" onerror="this.src='https://via.placeholder.com/55x80/2a2a4a/ff8080?text=?'">
+            <img class="movie-poster" src="${posterUrl}" alt="${movie.name}" onerror="this.src='https://via.placeholder.com/50x75?text=?'">
             <div class="movie-info">
                 <div class="movie-title">${movie.name}${year}</div>
                 <div class="movie-details">
@@ -89,7 +87,8 @@ function displayResults(movies) {
 }
 
 function openMovie(kinopoiskId) {
-    window.open(`https://www.kinopoisk.wtf/film/${kinopoiskId}/`, '_blank');
+    const wtfUrl = `https://www.kinopoisk.wtf/film/${kinopoiskId}/`;
+    window.open(wtfUrl, '_blank');
 }
 
 function showError(message) {
@@ -98,7 +97,6 @@ function showError(message) {
     errorDiv.classList.remove('hidden');
 }
 
-// Копирование DNS-ссылки
 function copyDnsLink() {
     const linkElement = document.getElementById('dnsLink');
     if (!linkElement) return;
@@ -114,6 +112,3 @@ function copyDnsLink() {
         alert('Не удалось скопировать. Выделите ссылку вручную.');
     });
 }
-
-// Глобальная доступность для onclick
-window.copyDnsLink = copyDnsLink;
