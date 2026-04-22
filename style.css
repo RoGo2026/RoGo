@@ -69,7 +69,7 @@
 /* Расположение справа */
 .right-1 { top: 2%; right: 12%; width: 220px; transform: rotate(3deg); }
 .right-2 { top: 38%; right: 8%; width: 200px; transform: rotate(-2deg); }
-.right-3 { top: 68%; right: 15%; width: 220px; transform: rotate(2deg); }
+.right-3 { top: 66%; right: 15%; width: 220px; transform: rotate(2deg); }
 
 /* Внизу */
 .bottom-1 { bottom: 1%; left: 50%; transform: translateX(-50%); width: 150px; opacity: 0.85; }
