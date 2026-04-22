@@ -43,8 +43,8 @@
 
 .wallpaper {
     position: absolute;
-    opacity: 0.35;
-    filter: grayscale(30%) brightness(0.8);
+    opacity: 0.15;
+    filter: grayscale(10%) brightness(0.2);
     transition: opacity 0.3s;
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -62,12 +62,12 @@
 }
 
 /* Расположение слева */
-.left-1 { top: 5%; left: 7%; width: 250px; transform: rotate(-3deg); }
+.left-1 { top: 2%; left: 10%; width: 250px; transform: rotate(-3deg); }
 .left-2 { top: 43%; left: 15%; width: 250px; transform: rotate(2deg); }
 .left-3 { top: 62%; left: 10%; width: 230px; transform: rotate(-2deg); }
 
 /* Расположение справа */
-.right-1 { top: 4%; right: 12%; width: 250px; transform: rotate(3deg); }
+.right-1 { top: 2%; right: 12%; width: 220px; transform: rotate(3deg); }
 .right-2 { top: 38%; right: 8%; width: 230px; transform: rotate(-2deg); }
 .right-3 { top: 73%; right: 15%; width: 250px; transform: rotate(2deg); }
 
@@ -144,7 +144,7 @@ h1 {
 p {
     color: #b0b0c0;
     margin-bottom: 24px;
-    font-size: clamp(14px, 4vw, 16px);
+    font-size: clamp(18px, 5vw, 22px);
     line-height: 1.5;
 }
 
@@ -164,7 +164,7 @@ p {
 #movieInput {
     flex: 1;
     padding: 16px 18px;
-    font-size: 16px;
+    font-size: 18px;
     background: rgba(20, 20, 35, 0.9);
     border: 1.5px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
@@ -317,7 +317,7 @@ button:active {
     margin-top: 30px;
     padding-top: 18px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 13px;
+    font-size: 16px;
     color: #9a9ab0;
     text-align: center;
     line-height: 1.5;
