@@ -5,6 +5,53 @@
     padding: 0;
 }
 
+/* === ИСПРАВЛЕНИЕ: КОНТЕЙНЕР ДЛЯ ФОНОВЫХ КАРТИНОК === */
+.bg-wallpaper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden; /* Обрезает всё, что вылезает */
+}
+
+.wallpaper {
+    position: absolute;
+    opacity: 0.35;
+    filter: grayscale(30%) brightness(0.8);
+    transition: opacity 0.3s;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    max-width: 90vw; /* НИКОГДА не шире 90% экрана */
+    max-height: 40vh;
+    object-fit: contain;
+}
+
+/* === АДАПТИВНЫЕ РАЗМЕРЫ (clamp = плавное изменение) === */
+/* Вверху по центру (Interstellar) */
+.top-center { 
+    top: 2%; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: clamp(80px, 15vw, 200px); 
+    opacity: 0.4;
+}
+
+/* Левая сторона */
+.left-1 { top: 8%; left: clamp(0px, 2vw, 30px); width: clamp(60px, 12vw, 160px); transform: rotate(-3deg); }
+.left-2 { top: 38%; left: clamp(0px, 3vw, 40px); width: clamp(50px, 10vw, 140px); transform: rotate(2deg); }
+.left-3 { top: 68%; left: clamp(0px, 2vw, 30px); width: clamp(55px, 11vw, 150px); transform: rotate(-2deg); }
+
+/* Правая сторона */
+.right-1 { top: 8%; right: clamp(0px, 2vw, 30px); width: clamp(60px, 12vw, 160px); transform: rotate(3deg); }
+.right-2 { top: 38%; right: clamp(0px, 3vw, 40px); width: clamp(50px, 10vw, 140px); transform: rotate(-2deg); }
+.right-3 { top: 68%; right: clamp(0px, 2vw, 30px); width: clamp(55px, 11vw, 150px); transform: rotate(2deg); }
+
+/* Внизу */
+.bottom-1 { bottom: 3%; left: 50%; transform: translateX(-50%); width: clamp(70px, 14vw, 180px); opacity: 0.25; }
+
 body {
     font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
     background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
@@ -15,6 +62,7 @@ body {
     align-items: center;
     justify-content: center;
     color: #e0e0e0;
+    overflow-x: hidden; /* Запрет горизонтальной прокрутки */
 }
 
 .container {
@@ -28,6 +76,8 @@ body {
     border-radius: 28px;
     padding: 24px 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(230, 0, 0, 0.15) inset;
+    position: relative;
+    z-index: 1;
 }
 
 h1 {
@@ -124,7 +174,7 @@ button:active {
 .results {
     display: flex;
     flex-direction: column;
-    gap: 16px; 
+    gap: 16px;
     margin: 20px 0 10px;
     max-height: 60vh;
     overflow-y: auto;
@@ -143,7 +193,7 @@ button:active {
 .movie-item {
     display: flex;
     align-items: center;
-    gap: 20px; 
+    gap: 20px;
     padding: 16px;
     background: rgba(25, 25, 45, 0.7);
     border-radius: 20px;
@@ -159,10 +209,10 @@ button:active {
     transform: translateY(-2px);
 }
 
-/* === (x2) === */
+/* Постеры фильмов в результатах поиска (увеличенные в 2 раза) */
 .movie-poster {
-    width: 110px;  /* Было 55px */
-    height: 160px; /* Было 80px */
+    width: 110px;
+    height: 160px;
     object-fit: cover;
     border-radius: 12px;
     background: #2a2a4a;
@@ -179,7 +229,7 @@ button:active {
     font-size: 18px;
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 8px; 
+    margin-bottom: 8px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -193,7 +243,7 @@ button:active {
 }
 
 .movie-details {
-    font-size: 14px; 
+    font-size: 14px;
     color: #b0b0d0;
     display: flex;
     flex-wrap: wrap;
@@ -252,7 +302,7 @@ code.clickable-link,
     border-radius: 14px;
     font-family: 'Courier New', monospace;
     font-size: 15px;
-    font-weight: 700 !important; /* принудительно жирный */
+    font-weight: 700 !important;
     color: #ff8888;
     word-break: break-all;
     cursor: pointer;
