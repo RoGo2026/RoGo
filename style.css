@@ -52,7 +52,7 @@
 
 /* Вверху по центру (Interstellar) */
 .top-center { 
-    top: 2%; 
+    top: 1%; 
     left: 50%; 
     transform: translateX(-50%); 
     width: 250px;        /* было 200px → сделайте больше */
@@ -62,17 +62,17 @@
 }
 
 /* Расположение слева */
-.left-1 { top: 8%; left: 7%; width: 250px; transform: rotate(-3deg); }
+.left-1 { top: 5%; left: 7%; width: 250px; transform: rotate(-3deg); }
 .left-2 { top: 43%; left: 15%; width: 250px; transform: rotate(2deg); }
-.left-3 { top: 62%; left: 10%; width: 250px; transform: rotate(-2deg); }
+.left-3 { top: 62%; left: 10%; width: 230px; transform: rotate(-2deg); }
 
 /* Расположение справа */
 .right-1 { top: 4%; right: 12%; width: 250px; transform: rotate(3deg); }
-.right-2 { top: 38%; right: 8%; width: 250px; transform: rotate(-2deg); }
+.right-2 { top: 38%; right: 8%; width: 230px; transform: rotate(-2deg); }
 .right-3 { top: 73%; right: 15%; width: 250px; transform: rotate(2deg); }
 
 /* Внизу */
-.bottom-1 { bottom: 3%; left: 50%; transform: translateX(-50%); width: 180px; opacity: 0.25; }
+.bottom-1 { bottom: 2%; left: 50%; transform: translateX(-50%); width: 180px; opacity: 0.25; }
 
 /* Адаптация для планшетов и телефонов — уменьшаем картинки */
 @media (max-width: 900px) {
