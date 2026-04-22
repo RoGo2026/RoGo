@@ -43,8 +43,8 @@
 
 .wallpaper {
     position: absolute;
-    opacity: 0.15;
-    filter: grayscale(10%) brightness(0.2);
+    opacity: 1;
+    filter: none;
     transition: opacity 0.3s;
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -55,7 +55,7 @@
     top: 1%; 
     left: 50%; 
     transform: translateX(-50%); 
-    width: 250px;        /* было 200px → сделайте больше */
+    width: 220px;        /* было 200px → сделайте больше */
     height: auto;        /* сохранит пропорции */
     opacity: 0.4;
     z-index: 0;
@@ -64,7 +64,7 @@
 /* Расположение слева */
 .left-1 { top: 2%; left: 10%; width: 250px; transform: rotate(-3deg); }
 .left-2 { top: 43%; left: 15%; width: 250px; transform: rotate(2deg); }
-.left-3 { top: 62%; left: 10%; width: 230px; transform: rotate(-2deg); }
+.left-3 { top: 72%; left: 10%; width: 230px; transform: rotate(-2deg); }
 
 /* Расположение справа */
 .right-1 { top: 2%; right: 12%; width: 220px; transform: rotate(3deg); }
@@ -72,7 +72,7 @@
 .right-3 { top: 73%; right: 15%; width: 250px; transform: rotate(2deg); }
 
 /* Внизу */
-.bottom-1 { bottom: 2%; left: 50%; transform: translateX(-50%); width: 180px; opacity: 0.25; }
+.bottom-1 { bottom: 1%; left: 50%; transform: translateX(-50%); width: 180px; opacity: 0.25; }
 
 /* Адаптация для планшетов и телефонов — уменьшаем картинки */
 @media (max-width: 900px) {
@@ -317,7 +317,7 @@ button:active {
     margin-top: 30px;
     padding-top: 18px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 16px;
+    font-size: 18px;
     color: #9a9ab0;
     text-align: center;
     line-height: 1.5;
