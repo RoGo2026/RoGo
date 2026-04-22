@@ -15,7 +15,6 @@ body {
     align-items: center;
     justify-content: center;
     color: #e0e0e0;
-    overflow-x: hidden; /* Запрещаем вылезание за горизонталь */
 }
 
 .container {
@@ -29,79 +28,6 @@ body {
     border-radius: 28px;
     padding: 24px 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(230, 0, 0, 0.15) inset;
-    position: relative;
-    z-index: 1;
-}
-
-/* === СТИЛИ ДЛЯ ФОНОВЫХ КАРТИНОК (ПО БОКАМ) === */
-.bg-wallpaper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-    overflow: hidden;
-}
-
-.wallpaper {
-    position: absolute;
-    opacity: 0.35;
-    filter: grayscale(30%) brightness(0.8);
-    transition: opacity 0.3s;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-/* Вверху по центру (Interstellar) */
-.top-center { 
-    top: 2%; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    width: 200px; 
-    opacity: 0.4;
-}
-
-/* Расположение слева (ОТОДВИНУЛ ОТ КРАЯ: left: 2% и 3%) */
-.left-1 { top: 8%; left: 2%; width: 160px; transform: rotate(-3deg); }
-.left-2 { top: 38%; left: 3%; width: 140px; transform: rotate(2deg); }
-.left-3 { top: 68%; left: 2%; width: 150px; transform: rotate(-2deg); }
-
-/* Расположение справа (ОТОДВИНУЛ ОТ КРАЯ: right: 2% и 3%) */
-.right-1 { top: 8%; right: 2%; width: 160px; transform: rotate(3deg); }
-.right-2 { top: 38%; right: 3%; width: 140px; transform: rotate(-2deg); }
-.right-3 { top: 68%; right: 2%; width: 150px; transform: rotate(2deg); }
-
-/* Внизу */
-.bottom-1 { bottom: 3%; left: 50%; transform: translateX(-50%); width: 180px; opacity: 0.25; }
-
-/* Адаптация для планшетов */
-@media (max-width: 900px) {
-    .top-center { width: 140px; }
-    .left-1 { width: 100px; left: 1%; }
-    .left-2 { width: 90px; left: 1%; }
-    .left-3 { width: 95px; left: 1%; }
-    
-    .right-1 { width: 100px; right: 1%; }
-    .right-2 { width: 90px; right: 1%; }
-    .right-3 { width: 95px; right: 1%; }
-    
-    .bottom-1 { width: 120px; }
-}
-
-/* Адаптация для телефонов */
-@media (max-width: 600px) {
-    .top-center { width: 100px; top: 1%; }
-    .left-1 { width: 70px; top: 6%; left: 1%; }
-    .left-2 { width: 65px; top: 28%; left: 1%; }
-    .left-3 { width: 68px; top: 53%; left: 1%; }
-    
-    .right-1 { width: 70px; top: 6%; right: 1%; }
-    .right-2 { width: 65px; top: 28%; right: 1%; }
-    .right-3 { width: 68px; top: 53%; right: 1%; }
-    
-    .bottom-1 { width: 90px; bottom: 2%; }
 }
 
 h1 {
@@ -198,7 +124,7 @@ button:active {
 .results {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     margin: 20px 0 10px;
     max-height: 60vh;
     overflow-y: auto;
@@ -217,7 +143,7 @@ button:active {
 .movie-item {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
     padding: 16px;
     background: rgba(25, 25, 45, 0.7);
     border-radius: 20px;
@@ -233,10 +159,9 @@ button:active {
     transform: translateY(-2px);
 }
 
-/* === ГЛАВНОЕ ИСПРАВЛЕНИЕ: ПОСТЕРЫ СТАЛИ В 2 РАЗА БОЛЬШЕ === */
 .movie-poster {
-    width: 110px;  /* Было 55px */
-    height: 160px; /* Было 80px */
+    width: 55px;
+    height: 80px;
     object-fit: cover;
     border-radius: 12px;
     background: #2a2a4a;
@@ -253,7 +178,7 @@ button:active {
     font-size: 18px;
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -267,7 +192,7 @@ button:active {
 }
 
 .movie-details {
-    font-size: 14px;
+    font-size: 13px;
     color: #b0b0d0;
     display: flex;
     flex-wrap: wrap;
