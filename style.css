@@ -40,9 +40,31 @@
 .bottom-1 { bottom: 3%; left: 50%; transform: translateX(-50%); width: 180px; opacity: 0.25; }
 .bottom-2 { bottom: 3%; right: 10%; width: 160px; opacity: 0.25; }
 
-/* На планшетах и телефонах скрываем картинки */
+/* Адаптация для планшетов и телефонов — уменьшаем картинки */
 @media (max-width: 900px) {
-    .bg-wallpaper { display: none; }
+    .left-1 { width: 100px; left: 0%; }
+    .left-2 { width: 90px; left: 1%; }
+    .left-3 { width: 95px; left: 0%; }
+    
+    .right-1 { width: 100px; right: 0%; }
+    .right-2 { width: 90px; right: 1%; }
+    .right-3 { width: 95px; right: 0%; }
+    
+    .bottom-1 { width: 120px; }
+    .bottom-2 { width: 100px; right: 5%; }
+}
+
+@media (max-width: 600px) {
+    .left-1 { width: 70px; top: 3%; }
+    .left-2 { width: 65px; top: 25%; }
+    .left-3 { width: 68px; top: 50%; }
+    
+    .right-1 { width: 70px; top: 3%; }
+    .right-2 { width: 65px; top: 25%; }
+    .right-3 { width: 68px; top: 50%; }
+    
+    .bottom-1 { width: 90px; bottom: 2%; }
+    .bottom-2 { width: 75px; }
 }
 
 body {
@@ -68,6 +90,8 @@ body {
     border-radius: 28px;
     padding: 24px 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(230, 0, 0, 0.15) inset;
+    position: relative;
+    z-index: 1;
 }
 
 h1 {
