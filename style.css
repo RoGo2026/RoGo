@@ -43,7 +43,7 @@
 
 .wallpaper {
     position: absolute;
-    opacity: 1;
+    opacity: 0.85;
     filter: none;
     transition: opacity 0.3s;
     border-radius: 8px;
@@ -57,7 +57,7 @@
     transform: translateX(-50%); 
     width: 220px;        /* было 200px → сделайте больше */
     height: auto;        /* сохранит пропорции */
-    opacity: 0.4;
+    opacity: 0.85;
     z-index: 0;
 }
 
@@ -72,7 +72,7 @@
 .right-3 { top: 73%; right: 15%; width: 200px; transform: rotate(2deg); }
 
 /* Внизу */
-.bottom-1 { bottom: 1%; left: 50%; transform: translateX(-50%); width: 180px; opacity: 0.25; }
+.bottom-1 { bottom: 1%; left: 50%; transform: translateX(-50%); width: 180px; opacity: 0.85; }
 
 /* Адаптация для планшетов и телефонов — уменьшаем картинки */
 @media (max-width: 900px) {
