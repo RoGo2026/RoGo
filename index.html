@@ -4,11 +4,341 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Найти фильм на Кинопоиск</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ---------- СБРОСЫ ---------- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e0e0e0;
+        }
+
+        /* ---------- ТРЁХКОЛОНОЧНЫЙ МАКЕТ ---------- */
+        .cinema-layout {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1600px;       /* широкий контейнер */
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Боковые панели – широкие, с крупными постерами */
+        .poster-wall {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 280px;            /* увеличена ширина для больших постеров */
+            flex-shrink: 0;
+        }
+
+        /* Стили для постеров */
+        .poster {
+            width: 100%;
+            aspect-ratio: 2 / 3;      /* киношная пропорция */
+            object-fit: cover;
+            border-radius: 24px;
+            box-shadow: 0 18px 30px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(230, 57, 70, 0.3);
+            background-color: #1e1a2e;
+            display: block;
+            transition: transform 0.2s;
+        }
+
+        /* Лёгкий эффект при наведении (не кликабельно) */
+        .poster:hover {
+            transform: scale(1.02);
+        }
+
+        /* ---------- ЦЕНТРАЛЬНЫЙ БЛОК – ВАШ ОРИГИНАЛ БЕЗ ИЗМЕНЕНИЙ ---------- */
+        .container {
+            flex: 1;
+            max-width: 600px;
+            min-width: 320px;
+            background: rgba(30, 30, 50, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            padding: 24px 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(230, 0, 0, 0.15) inset;
+        }
+
+        h1 {
+            font-size: clamp(24px, 8vw, 32px);
+            font-weight: 600;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ff4d4d, #cc0000);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            color: #b0b0c0;
+            margin-bottom: 24px;
+            font-size: clamp(14px, 4vw, 16px);
+            line-height: 1.5;
+        }
+
+        .search-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 480px) {
+            .search-box {
+                flex-direction: row;
+            }
+        }
+
+        #movieInput {
+            flex: 1;
+            padding: 16px 18px;
+            font-size: 16px;
+            background: rgba(20, 20, 35, 0.9);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: #ffffff;
+            outline: none;
+            transition: all 0.2s ease;
+            -webkit-appearance: none;
+        }
+
+        #movieInput:focus {
+            border-color: #cc0000;
+            background: rgba(25, 25, 45, 1);
+            box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.2);
+        }
+
+        #movieInput::placeholder {
+            color: #7a7a9a;
+            opacity: 0.7;
+        }
+
+        button {
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #e60000, #990000);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 14px rgba(230, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #ff1a1a, #b30000);
+            transform: scale(1.02);
+            box-shadow: 0 8px 18px rgba(230, 0, 0, 0.4);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 30px 10px;
+            color: #ff8080;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .results {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0 10px;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .results::-webkit-scrollbar {
+            width: 5px;
+        }
+        .results::-webkit-scrollbar-thumb {
+            background: #cc0000;
+            border-radius: 10px;
+        }
+
+        .movie-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(25, 25, 45, 0.7);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .movie-item:hover {
+            background: rgba(40, 40, 70, 0.8);
+            border-color: rgba(204, 0, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .movie-poster {
+            width: 55px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 12px;
+            background: #2a2a4a;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+        }
+
+        .movie-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .movie-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 480px) {
+            .movie-title {
+                white-space: normal;
+                font-size: 16px;
+            }
+        }
+
+        .movie-details {
+            font-size: 13px;
+            color: #b0b0d0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 10px;
+        }
+
+        .error {
+            color: #ff7b7b;
+            text-align: center;
+            padding: 20px;
+            background: rgba(180, 40, 40, 0.15);
+            border-radius: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #cc0000;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .note {
+            margin-top: 30px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+            color: #9a9ab0;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 380px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px 16px;
+            }
+            button {
+                padding: 16px 18px;
+                font-size: 15px;
+            }
+            #movieInput {
+                padding: 14px 16px;
+            }
+        }
+
+        /* Кликабельная ссылка DNS */
+        code.clickable-link,
+        #dnsLink.clickable-link {
+            display: block;
+            padding: 14px 18px;
+            background: rgba(204, 0, 0, 0.15);
+            border: 1.5px dashed rgba(204, 0, 0, 0.5);
+            border-radius: 14px;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            font-weight: 700 !important;
+            color: #ff8888;
+            word-break: break-all;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+            text-decoration: none;
+            text-align: center;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 8px rgba(204, 0, 0, 0.2);
+        }
+
+        code.clickable-link:hover,
+        #dnsLink.clickable-link:hover {
+            background: rgba(204, 0, 0, 0.3);
+            color: #ffcccc;
+            border: 1.5px solid #cc0000;
+            box-shadow: 0 0 12px rgba(204, 0, 0, 0.4);
+            transform: scale(1.01);
+        }
+
+        /* ---------- АДАПТИВ: скрываем боковые панели на узких экранах ---------- */
+        @media (max-width: 950px) {
+            .poster-wall {
+                display: none;
+            }
+            .cinema-layout {
+                justify-content: center;
+            }
+            .container {
+                max-width: 100%;
+            }
+        }
+
+        /* Для очень больших экранов боковые панели ещё шире */
+        @media (min-width: 1400px) {
+            .poster-wall {
+                width: 320px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="cinema-layout">
-        <!-- ЛЕВАЯ ПАНЕЛЬ – 3 БОЛЬШИХ ПОСТЕРА -->
+        <!-- ЛЕВАЯ ПАНЕЛЬ – 3 КРУПНЫХ ПОСТЕРА -->
         <div class="poster-wall left">
             <img class="poster" src="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Интерстеллар">
             <img class="poster" src="https://image.tmdb.org/t/p/w500/8b8R8l88Qje9dn9OE8PY05Nxl1.jpg" alt="Дюна: Часть вторая">
@@ -39,7 +369,7 @@
             </div>
         </div>
 
-        <!-- ПРАВАЯ ПАНЕЛЬ – 3 БОЛЬШИХ ПОСТЕРА -->
+        <!-- ПРАВАЯ ПАНЕЛЬ – 3 КРУПНЫХ ПОСТЕРА -->
         <div class="poster-wall right">
             <img class="poster" src="https://image.tmdb.org/t/p/w500/8Gxv8g86uEo44wNz6Q4LnuJJIZf.jpg" alt="Оппенгеймер">
             <img class="poster" src="https://image.tmdb.org/t/p/w500/t6HIqrRAclr2Qn8Z9rCgwWcFQ7S.jpg" alt="Аватар: Путь воды">
@@ -47,6 +377,121 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // ---------- ВАШ ОРИГИНАЛЬНЫЙ SCRIPT.JS (БЕЗ ИЗМЕНЕНИЙ) ----------
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchButton = document.getElementById('searchButton');
+            const movieInput = document.getElementById('movieInput');
+
+            if (searchButton) {
+                searchButton.addEventListener('click', searchMovies);
+            }
+            if (movieInput) {
+                movieInput.addEventListener('keypress', (event) => {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
+                        searchMovies();
+                    }
+                });
+            }
+        });
+
+        const API_KEY = '3W9C8C5-2H1M85S-GEXEN27-S5DG27B';
+
+        async function searchMovies() {
+            const query = document.getElementById('movieInput').value.trim();
+            if (!query) {
+                showError('Пожалуйста, введите название фильма.');
+                return;
+            }
+
+            const url = `https://api.poiskkino.dev/v1.4/movie/search?page=1&limit=10&query=${encodeURIComponent(query)}`;
+
+            const loading = document.getElementById('loading');
+            const resultsDiv = document.getElementById('results');
+            const errorDiv = document.getElementById('error');
+
+            loading.classList.remove('hidden');
+            resultsDiv.innerHTML = '';
+            errorDiv.classList.add('hidden');
+
+            try {
+                const response = await fetch(url, {
+                    headers: { 'X-API-KEY': API_KEY }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Ошибка API: ${response.status}`);
+                }
+
+                const data = await response.json();
+                if (!data.docs || data.docs.length === 0) {
+                    showError('Ничего не найдено. Попробуйте изменить запрос.');
+                    return;
+                }
+
+                displayResults(data.docs);
+            } catch (error) {
+                console.error('Ошибка при поиске:', error);
+                showError('Не удалось выполнить поиск. Проверьте API-ключ и попробуйте снова.');
+            } finally {
+                loading.classList.add('hidden');
+            }
+        }
+
+        function displayResults(movies) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            movies.forEach(movie => {
+                const movieElement = document.createElement('div');
+                movieElement.className = 'movie-item';
+                movieElement.onclick = () => openMovie(movie.id);
+
+                const posterUrl = movie.poster?.previewUrl || 'https://via.placeholder.com/50x75?text=?';
+                const year = movie.year ? ` (${movie.year})` : '';
+                const rating = movie.rating?.kp ? `★ ${movie.rating.kp.toFixed(1)}` : '';
+
+                movieElement.innerHTML = `
+                    <img class="movie-poster" src="${posterUrl}" alt="${movie.name}" onerror="this.src='https://via.placeholder.com/50x75?text=?'">
+                    <div class="movie-info">
+                        <div class="movie-title">${movie.name}${year}</div>
+                        <div class="movie-details">
+                            ${movie.alternativeName ? `${movie.alternativeName} • ` : ''}
+                            ${movie.movieLength ? `${movie.movieLength} мин` : ''}
+                            ${rating ? ` • ${rating}` : ''}
+                        </div>
+                    </div>
+                `;
+                resultsDiv.appendChild(movieElement);
+            });
+        }
+
+        function openMovie(kinopoiskId) {
+            window.open(`https://www.kinopoisk.wtf/film/${kinopoiskId}/`, '_blank');
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+        }
+
+        function copyDnsLink() {
+            const linkElement = document.getElementById('dnsLink');
+            if (!linkElement) return;
+            
+            const linkText = linkElement.textContent;
+            navigator.clipboard.writeText(linkText).then(() => {
+                const originalText = linkElement.textContent;
+                linkElement.textContent = '✅ Ссылка скопирована!';
+                setTimeout(() => {
+                    linkElement.textContent = originalText;
+                }, 2000);
+            }).catch(err => {
+                alert('Не удалось скопировать. Выделите ссылку вручную.');
+            });
+        }
+    </script>
 </body>
 </html>
