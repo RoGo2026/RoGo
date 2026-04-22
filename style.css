@@ -257,8 +257,8 @@ button:active {
 }
 
 .movie-poster {
-    width: 80px;
-    height: 110px;
+    width: 200px;
+    height: 450px;
     object-fit: cover;
     border-radius: 12px;
     background: #2a2a4a;
