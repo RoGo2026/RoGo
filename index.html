@@ -2,99 +2,96 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>CINEVERSE · Поиск фильмов</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Найти фильм на Кинопоиск</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="cinema-grid">
-        <!-- ЛЕВАЯ ПАНЕЛЬ – CINEVERSE -->
+        <!-- ЛЕВАЯ ПАНЕЛЬ – статичные постеры (только для вида) -->
         <div class="poster-panel">
             <div class="panel-header">
                 <h2>CINEVERSE</h2>
                 <p>Кино, которое вдохновляет</p>
             </div>
-            <div class="movie-card" data-movie="Интерстеллар">
-                <img class="poster-img" src="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Интерстеллар" onerror="this.src='https://via.placeholder.com/300x450/1e1630/ff8080?text=INTERSTELLAR'">
-                <h3>Интерстеллар <span class="rating">★ 8.6</span></h3>
-                <div class="movie-meta"><span class="year">2014</span> <span>Кристофер Нолан</span></div>
+            <div class="movie-card">
+                <div class="poster-placeholder">★ 8.6</div>
+                <h3>Интерстеллар</h3>
+                <div class="movie-meta"><span class="year">2014</span></div>
             </div>
-            <div class="movie-card" data-movie="Дюна: Часть вторая">
-                <img class="poster-img" src="https://image.tmdb.org/t/p/w500/8b8R8l88Qje9dn9OE8PY05Nxl1.jpg" alt="Дюна 2" onerror="this.src='https://via.placeholder.com/300x450/1e1630/ffb347?text=DUNE+2'">
-                <h3>Дюна: Часть вторая <span class="rating">★ 8.7</span></h3>
-                <div class="movie-meta"><span class="year">2024</span> <span>Дени Вильнёв</span></div>
+            <div class="movie-card">
+                <div class="poster-placeholder">★ 8.7</div>
+                <h3>Дюна: Часть вторая</h3>
+                <div class="movie-meta"><span class="year">2024</span></div>
             </div>
-            <div class="movie-card" data-movie="Бегущий по лезвию 2049">
-                <img class="poster-img" src="https://image.tmdb.org/t/p/w500/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg" alt="Бегущий по лезвию 2049" onerror="this.src='https://via.placeholder.com/300x450/1e1630/4db8ff?text=BLADE+RUNNER'">
-                <h3>Бегущий по лезвию 2049 <span class="rating">★ 8.0</span></h3>
-                <div class="movie-meta"><span class="year">2017</span> <span>Дени Вильнёв</span></div>
+            <div class="movie-card">
+                <div class="poster-placeholder">★ 8.0</div>
+                <h3>Бегущий по лезвию 2049</h3>
+                <div class="movie-meta"><span class="year">2017</span></div>
             </div>
-            <div class="movie-card" data-movie="Джокер">
-                <img class="poster-img" src="https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg" alt="Джокер" onerror="this.src='https://via.placeholder.com/300x450/1e1630/99ff99?text=JOKER'">
-                <h3>Джокер <span class="rating">★ 8.4</span></h3>
-                <div class="movie-meta"><span class="year">2019</span> <span>Тодд Филлипс</span></div>
+            <div class="movie-card">
+                <div class="poster-placeholder">★ 8.4</div>
+                <h3>Джокер</h3>
+                <div class="movie-meta"><span class="year">2019</span></div>
             </div>
         </div>
 
-        <!-- ЦЕНТРАЛЬНАЯ ПАНЕЛЬ – MOVIEGO (ПОИСК) -->
+        <!-- ЦЕНТРАЛЬНАЯ ПАНЕЛЬ – ПОИСК (БЕЗ ИЗМЕНЕНИЙ) -->
         <div class="search-panel">
-            <div class="search-header">
-                <h1>MOVIEGO</h1>
-                <div class="subhead">Хорошее кино на любой вкус</div>
-            </div>
+            <h1>🎬 Поиск фильма</h1>
+            <p>Введите название фильма и выберите подходящий вариант из списка.</p>
 
             <div class="search-box">
-                <input type="text" id="movieInput" placeholder="Например: Начало, Оппенгеймер...">
+                <input type="text" id="movieInput" placeholder="Например: Интерстеллар">
                 <button id="searchButton">Найти</button>
             </div>
 
-            <div id="loading" class="loading hidden">🎬 Ищем фильмы...</div>
+            <div id="loading" class="loading hidden">Поиск...</div>
             <div id="results" class="results"></div>
             <div id="error" class="error hidden"></div>
 
-            <div class="dns-note">
-                <p style="margin-bottom: 6px;">🚫 Отключить рекламу: DNS</p>
-                <code id="dnsLink" class="clickable-link" onclick="copyDnsLink()">https://dns.adguard-dns.com/dns-query</code>
-                <p style="font-size: 0.75rem; margin-top: 8px;">(нажми на ссылку — скопируется)</p>
+            <!-- Инструкция DNS (как было) -->
+            <div class="note">
+                <div class="dns-notice">
+                    <p>Чтобы отключить рекламу на сайте:<br>
+                    зайди в настройки браузера, в поиске набери <strong>DNS</strong>, выбери <strong>пользовательский профиль</strong> и в пустое поле вставь ссылку:</p>
+                    <code id="dnsLink" class="clickable-link" onclick="copyDnsLink()">https://dns.adguard-dns.com/dns-query</code>
+                    <p class="click-hint">(нажми на ссылку, она скопируется)</p>
+                </div>
             </div>
         </div>
 
-        <!-- ПРАВАЯ ПАНЕЛЬ – KINOHUB + легенды -->
+        <!-- ПРАВАЯ ПАНЕЛЬ – статичные постеры -->
         <div class="poster-panel">
             <div class="panel-header">
                 <h2>KINOHUB</h2>
                 <p>Погрузись в мир великого кино</p>
             </div>
-            <div class="movie-card" data-movie="Оппенгеймер">
-                <img class="poster-img" src="https://image.tmdb.org/t/p/w500/8Gxv8g86uEo44wNz6Q4LnuJJIZf.jpg" alt="Оппенгеймер" onerror="this.src='https://via.placeholder.com/300x450/1e1630/ffaa33?text=OPPENHEIMER'">
-                <h3>Оппенгеймер <span class="rating">★ 8.6</span></h3>
-                <div class="movie-meta"><span class="year">2023</span> <span>Кристофер Нолан</span></div>
+            <div class="movie-card">
+                <div class="poster-placeholder">★ 8.6</div>
+                <h3>Оппенгеймер</h3>
+                <div class="movie-meta"><span class="year">2023</span></div>
             </div>
-            <div class="movie-card" data-movie="Аватар: Путь воды">
-                <img class="poster-img" src="https://image.tmdb.org/t/p/w500/t6HIqrRAclr2Qn8Z9rCgwWcFQ7S.jpg" alt="Аватар 2" onerror="this.src='https://via.placeholder.com/300x450/1e1630/2aa6ff?text=AVATAR+2'">
-                <h3>Аватар: Путь воды <span class="rating">★ 7.9</span></h3>
-                <div class="movie-meta"><span class="year">2022</span> <span>Джеймс Кэмерон</span></div>
+            <div class="movie-card">
+                <div class="poster-placeholder">★ 7.9</div>
+                <h3>Аватар: Путь воды</h3>
+                <div class="movie-meta"><span class="year">2022</span></div>
             </div>
-            <div class="movie-card" data-movie="Годзилла и Конг: Новая империя">
-                <img class="poster-img" src="https://image.tmdb.org/t/p/w500/qAhedRx8sWz9W8nLZ5jG7gPt2F4.jpg" alt="Годзилла и Конг" onerror="this.src='https://via.placeholder.com/300x450/1e1630/6bb86b?text=GODZILLA+VS+KONG'">
-                <h3>Годзилла и Конг: Новая империя <span class="rating">★ 6.5</span></h3>
-                <div class="movie-meta"><span class="year">2024</span> <span>Адам Вингард</span></div>
+            <div class="movie-card">
+                <div class="poster-placeholder">★ 6.5</div>
+                <h3>Годзилла и Конг</h3>
+                <div class="movie-meta"><span class="year">2024</span></div>
             </div>
 
             <div class="legend-block">
                 <h3>Культовые</h3>
-                <div class="legend-items">
-                    <div class="legend-item" data-movie="Темный рыцарь">
-                        <img class="legend-poster" src="https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg" onerror="this.src='https://via.placeholder.com/50x70/1e1630/ffb347?text=TDK'">
-                        <span class="legend-title">THE DARK KNIGHT</span>
-                    </div>
-                    <div class="legend-item" data-movie="Криминальное чтиво">
-                        <img class="legend-poster" src="https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg" onerror="this.src='https://via.placeholder.com/50x70/1e1630/ff6a6a?text=PULP'">
-                        <span class="legend-title">PULP FICTION</span>
-                    </div>
+                <div class="legend-item">
+                    <div class="legend-placeholder">TDK</div>
+                    <span class="legend-title">THE DARK KNIGHT</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-placeholder">PF</div>
+                    <span class="legend-title">PULP FICTION</span>
                 </div>
             </div>
         </div>
