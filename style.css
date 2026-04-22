@@ -1,103 +1,8 @@
-/* Иконка хлопушки рядом с заголовком */
-.clapper-icon {
-    width: 42px;
-    height: 42px;
-    vertical-align: middle;
-    margin-right: 12px;
-    margin-bottom: 4px;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-    animation: clapperFloat 3s ease-in-out infinite;
-}
-
-@keyframes clapperFloat {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-3px) rotate(-5deg); }
-}
-
-@media (max-width: 480px) {
-    .clapper-icon {
-        width: 32px;
-        height: 32px;
-        margin-right: 8px;
-    }
-}
-
 /* Общие сбросы и базовые стили */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-}
-
-/* === СТИЛИ ДЛЯ ФОНОВЫХ КАРТИНОК === */
-.bg-wallpaper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-    overflow: hidden;
-}
-
-.wallpaper {
-    position: absolute;
-    opacity: 0.35;
-    filter: grayscale(30%) brightness(0.8);
-    transition: opacity 0.3s;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-/* Вверху по центру (Interstellar) */
-.top-center { 
-    top: 2%; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    width: 200px; 
-    opacity: 0.4;
-    z-index: 0;
-}
-
-/* Расположение слева */
-.left-1 { top: 8%; left: 1%; width: 160px; transform: rotate(-3deg); }
-.left-2 { top: 38%; left: 2%; width: 140px; transform: rotate(2deg); }
-.left-3 { top: 68%; left: 1%; width: 150px; transform: rotate(-2deg); }
-
-/* Расположение справа */
-.right-1 { top: 8%; right: 1%; width: 160px; transform: rotate(3deg); }
-.right-2 { top: 38%; right: 2%; width: 140px; transform: rotate(-2deg); }
-.right-3 { top: 68%; right: 1%; width: 150px; transform: rotate(2deg); }
-
-/* Внизу */
-.bottom-1 { bottom: 3%; left: 50%; transform: translateX(-50%); width: 180px; opacity: 0.25; }
-
-/* Адаптация для планшетов и телефонов — уменьшаем картинки */
-@media (max-width: 900px) {
-    .top-center { width: 140px; }
-    .left-1 { width: 100px; left: 0%; }
-    .left-2 { width: 90px; left: 1%; }
-    .left-3 { width: 95px; left: 0%; }
-    
-    .right-1 { width: 100px; right: 0%; }
-    .right-2 { width: 90px; right: 1%; }
-    .right-3 { width: 95px; right: 0%; }
-    
-    .bottom-1 { width: 120px; }
-}
-
-@media (max-width: 600px) {
-    .top-center { width: 100px; top: 1%; }
-    .left-1 { width: 70px; top: 6%; }
-    .left-2 { width: 65px; top: 28%; }
-    .left-3 { width: 68px; top: 53%; }
-    
-    .right-1 { width: 70px; top: 6%; }
-    .right-2 { width: 65px; top: 28%; }
-    .right-3 { width: 68px; top: 53%; }
-    
-    .bottom-1 { width: 90px; bottom: 2%; }
 }
 
 body {
@@ -123,8 +28,6 @@ body {
     border-radius: 28px;
     padding: 24px 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(230, 0, 0, 0.15) inset;
-    position: relative;
-    z-index: 1;
 }
 
 h1 {
@@ -221,7 +124,7 @@ button:active {
 .results {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px; 
     margin: 20px 0 10px;
     max-height: 60vh;
     overflow-y: auto;
@@ -240,7 +143,7 @@ button:active {
 .movie-item {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 20px; 
     padding: 16px;
     background: rgba(25, 25, 45, 0.7);
     border-radius: 20px;
@@ -256,9 +159,10 @@ button:active {
     transform: translateY(-2px);
 }
 
+/* === (x2) === */
 .movie-poster {
-    width: 55px;
-    height: 80px;
+    width: 110px;  /* Было 55px */
+    height: 160px; /* Было 80px */
     object-fit: cover;
     border-radius: 12px;
     background: #2a2a4a;
@@ -275,7 +179,7 @@ button:active {
     font-size: 18px;
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 6px;
+    margin-bottom: 8px; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -289,7 +193,7 @@ button:active {
 }
 
 .movie-details {
-    font-size: 13px;
+    font-size: 14px; 
     color: #b0b0d0;
     display: flex;
     flex-wrap: wrap;
@@ -348,7 +252,7 @@ code.clickable-link,
     border-radius: 14px;
     font-family: 'Courier New', monospace;
     font-size: 15px;
-    font-weight: 700 !important;
+    font-weight: 700 !important; /* принудительно жирный */
     color: #ff8888;
     word-break: break-all;
     cursor: pointer;
