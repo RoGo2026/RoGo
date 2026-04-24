@@ -95,8 +95,8 @@ function displayResults(movies) {
 }
 
 function openMovie(kinopoiskId) {
-    const oneUrl = `https://www.kinopoisk.one/film/${kinopoiskId}/`;
-    window.open(oneUrl, '_blank');
+    const wtfUrl = `https://www.kinopoisk.wtf/film/${kinopoiskId}/`;
+    window.open(wtfUrl, '_blank');
 }
 
 function showError(message) {
