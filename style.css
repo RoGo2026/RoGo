@@ -229,13 +229,14 @@ button:active {
     padding-right: 4px;
 }
 
-/* .results::-webkit-scrollbar {
-    width: 5px;
+.results {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0 10px;
+    /* Убрали ограничение высоты и внутренний скролл */
+    padding-right: 4px;
 }
-.results::-webkit-scrollbar-thumb {
-    background: #cc0000;
-    border-radius: 10px;
-} */
 
 .movie-item {
     display: flex;
@@ -249,7 +250,6 @@ button:active {
     cursor: pointer;
     transition: all 0.15s ease;
 }
-
 .movie-item:hover {
     background: rgba(40, 40, 70, 0.8);
     border-color: rgba(204, 0, 0, 0.4);
