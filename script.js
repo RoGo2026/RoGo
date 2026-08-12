@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Адрес твоего Cloudflare Worker
+
 const WORKER_URL = 'https://deploy.romanbor555.workers.dev';
 
 const VIEW_DOMAIN = 'www.kinopoisk.cam'; 
