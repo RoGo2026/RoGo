@@ -10,14 +10,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Адрес твоего Cloudflare Worker
+const WORKER_URL = 'https://deploy.romanbor555.workers.dev';
+
 const VIEW_DOMAIN = 'www.kinopoisk.cam'; 
 
 async function searchMovies() {
     const query = document.getElementById('movieInput').value.trim();
     if (!query) return;
      
-    const API_KEY = '22482d11-bce8-45d8-8bed-0628cd955284'; 
-    const url = `https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=${encodeURIComponent(query)}&page=1`;
+    const url = `${WORKER_URL}/api/search?q=${encodeURIComponent(query)}&page=1`;
 
     const loading = document.getElementById('loading');
     const resultsDiv = document.getElementById('results');
@@ -25,13 +27,7 @@ async function searchMovies() {
     resultsDiv.innerHTML = '';
 
     try {
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'X-API-KEY': API_KEY,
-                'Content-Type': 'application/json',
-            },
-        });
+        const response = await fetch(url);
         const data = await response.json();
         if (data.films) displayResults(data.films);
     } catch (error) {
